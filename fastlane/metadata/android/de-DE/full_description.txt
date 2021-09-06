@@ -1,0 +1,13 @@
+Mit PerfectEggTimer können Sie Eier perfekt kochen.
+
+Die Kochdauer wird berechnet abhängig von
+
+- der gewünschten Konsistenz
+- der Größe des Eies
+- der Starttemperatur
+- der geographischen Höhe
+
+Minimale Berechtigungen:
+- Berechtigung für GPS
+
+

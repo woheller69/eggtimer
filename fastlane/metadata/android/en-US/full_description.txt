@@ -1,0 +1,13 @@
+With PerfectEggTimer you can cook eggs perfectly.
+
+The cooking time is calculated depending on
+
+- the desired consistency
+- the size of the egg
+- the start temperature
+- the geographic altitude
+
+Minimum permissions:
+- Authorization for GPS 
+
+
