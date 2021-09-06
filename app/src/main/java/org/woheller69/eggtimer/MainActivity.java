@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 
+import android.util.Log;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int tTarget=65;
     private Ringtone ringtone;
     private MediaPlayer player;
+    private LocationListener locationListenerGPS;
 
     public void resetTimer() {
         timerTextView.setText("-:--");
@@ -99,6 +102,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestLocation();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         setContentView(R.layout.activity_main);
-
-        requestLocation();
 
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         controllerButton = (Button) findViewById(R.id.controllerButton);
@@ -148,6 +156,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void requestLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+            locationListenerGPS = new LocationListener() {
+                @Override
+                public void onLocationChanged(android.location.Location location) {
+                    altitude= (int) location.getAltitude();
+                    Log.d("GPS", "Location changed");
+                }
+
+                @Deprecated
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+            };
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListenerGPS);
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (locationGPS != null) {
                 altitude = (int) locationGPS.getAltitude();
