@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -28,53 +29,46 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private final int SOFT_EGG = 65;
+    private final int MEDIUM_EGG = 71;
+    private final int HARD_EGG = 85;
+    private static final String[] eggSize = {"S", "M", "L", "XL"};
+    private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "20°C"};
+    private static final String[] target = {"weich", "mittel", "hart"};
 
     private TextView timerTextView;
     private Button controllerButton;
     private Boolean counterIsActive = false;
     private Boolean ringtoneIsActive = false;
     private CountDownTimer countDownTimer;
-    private static final String[] eggSize = {"S", "M", "L", "XL"};
-    private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "20°C"};
-    private static final String[] target = {"weich", "mittel", "hart"};
+
     private float Diameter;
     private int altitude=0;
-    private int tFridge;
-    private int tTarget =65;
+    private int tFridge=10;
+    private int tTarget=65;
     private Ringtone ringtone;
+    private MediaPlayer player;
 
     public void resetTimer() {
-
         timerTextView.setText("-:--");
         countDownTimer.cancel();
         controllerButton.setText("Start");
         timerTextView.setEnabled(true);
         counterIsActive = false;
-
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public void updateTimer(int secondsLeft) {
-
         int minutes = (int) secondsLeft / 60;
         int seconds = secondsLeft - minutes * 60;
 
-        String secondString = Integer.toString(seconds);
-
-        if (seconds <= 9) {
-
-            secondString = "0" + secondString;
-
-        }
-
-        timerTextView.setText(minutes + ":" + secondString);
-
+        timerTextView.setText(String.format("%02d", minutes)
+                + ":" + String.format("%02d", seconds));
     }
 
     public void controlTimer(View view) {
-
         if (ringtoneIsActive) {
-            ringtone.stop();
+            player.stop();
             ringtoneIsActive=false;
             controllerButton.setText("Start");
         } else if (!counterIsActive) {
@@ -84,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             double timeInMillis;
             requestLocation();
 
-            timeInMillis= (0.15*Diameter*Diameter*Math.log(2*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354- tTarget)))*60*1000;
+            timeInMillis = (0.15*Diameter*Diameter*Math.log(2*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354-tTarget)))*60*1000;
 
             countDownTimer = new CountDownTimer((long) timeInMillis, 1000) {
 
@@ -101,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }.start();
 
         } else {
-
             resetTimer();
         }
     }
@@ -135,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item, fridgeTemperature);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFridgeTemp.setAdapter(adapter2);
         spinnerFridgeTemp.setSelection(2);
         spinnerFridgeTemp.setOnItemSelectedListener(this);
@@ -145,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item, target);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTarget.setAdapter(adapter3);
         spinnerTarget.setSelection(0);
         spinnerTarget.setOnItemSelectedListener(this);
@@ -157,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (locationGPS != null) {
-                altitude= (int) locationGPS.getAltitude();
+                altitude = (int) locationGPS.getAltitude();
                 TextView altitudeTextView = findViewById(R.id.altitude);
-                altitudeTextView.setText(Integer.toString(altitude)+"m");
+                altitudeTextView.setText(altitude +"m");
             }else Toast.makeText(this.getApplicationContext(),"Keine Position verfügbar",Toast.LENGTH_SHORT).show();
         }
     }
@@ -184,31 +177,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }else if (parent==findViewById(R.id.spinnerFridge)) {
             switch (position) {
                 case 0:
-                    tFridge=6;
+                    tFridge = 6;
                     break;
                 case 1:
-                    tFridge=8;
+                    tFridge = 8;
                     break;
                 case 2:
-                    tFridge=10;
+                    tFridge = 10;
                     break;
                 case 3:
-                    tFridge=12;
+                    tFridge = 12;
                     break;
                 case 4:
-                    tFridge=20;
+                    tFridge = 20;
                     break;
             }
         }else if (parent==findViewById(R.id.spinnerTarget)) {
             switch (position) {
                 case 0:
-                    tTarget =65;
+                    tTarget=SOFT_EGG;
                     break;
                 case 1:
-                    tTarget =71;
+                    tTarget=MEDIUM_EGG;
                     break;
                 case 2:
-                    tTarget =80;
+                    tTarget=HARD_EGG;
                     break;
             }
         }
@@ -222,9 +215,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-            ringtoneIsActive=true;
+            ringtoneIsActive = true;
             controllerButton.setText("Stop Alarm");
-            ringtone.play();
+            player = MediaPlayer.create(this, notification);
+            player.setLooping(true);
+            player.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
