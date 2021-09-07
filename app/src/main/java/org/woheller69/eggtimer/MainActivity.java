@@ -68,8 +68,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         int minutes = (int) secondsLeft / 60;
         int seconds = secondsLeft - minutes * 60;
 
-        timerTextView.setText(String.format("%02d", minutes)
-                + ":" + String.format("%02d", seconds));
+        String timeRemaining = String.format("%02d", minutes)
+                + ":" + String.format("%02d", seconds);
+
+        timerTextView.setText(timeRemaining);
+        showNotification(timeRemaining);
     }
 
     public void controlTimer(View view) {
@@ -96,11 +99,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void onFinish() {
+                    showNotification("00:00");
                     resetTimer();
                     ringtone();
                 }
             }.start();
-            showNotification(timeInMillis);
         } else {
             resetTimer();
             cancelNotification();
@@ -122,15 +125,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mNotificationManager.cancel(1);
     }
 
-    private void showNotification(double timeInMillis) {
-
+    private void showNotification(String timeRemaining) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent pIntent = PendingIntent.getActivity(this,0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"EggTimer")
-                .setSmallIcon(R.drawable.egg_timer_transparent).setWhen((long) (System.currentTimeMillis()+timeInMillis)).setUsesChronometer(true)
-                .setContentTitle(getString(R.string.cookingtime)).setSilent(true).setContentIntent(pIntent);
+                .setSmallIcon(R.drawable.egg_timer_transparent)
+                .setContentTitle(getString(R.string.cookingtime)).setContentText(timeRemaining).setSilent(true).setContentIntent(pIntent);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1,builder.build());
     }
