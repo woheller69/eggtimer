@@ -2,22 +2,26 @@ package org.woheller69.eggtimer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
-
-import android.util.Log;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -48,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int altitude=0;
     private int tFridge=10;
     private int tTarget=65;
-    private Ringtone ringtone;
     private MediaPlayer player;
     private LocationListener locationListenerGPS;
 
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void controlTimer(View view) {
         if (ringtoneIsActive) {
             player.stop();
+            cancelNotification();
             ringtoneIsActive=false;
             controllerButton.setText("Start");
         } else if (!counterIsActive) {
@@ -96,10 +100,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     ringtone();
                 }
             }.start();
-
+            showNotification(timeInMillis);
         } else {
             resetTimer();
+            cancelNotification();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "EggTimer";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "EggTimer", NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    private void cancelNotification() {
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(1);
+    }
+
+    private void showNotification(double timeInMillis) {
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pIntent = PendingIntent.getActivity(this,0, intent, 0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"EggTimer")
+                .setSmallIcon(R.drawable.egg_timer_transparent).setWhen((long) (System.currentTimeMillis()+timeInMillis)).setUsesChronometer(true)
+                .setContentTitle("Verbleibende Kochzeit").setSilent(true).setContentIntent(pIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1,builder.build());
     }
 
 
@@ -109,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         requestLocation();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+        initNotification();
 
         setContentView(R.layout.activity_main);
 
@@ -161,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onLocationChanged(android.location.Location location) {
                     altitude= (int) location.getAltitude();
-                    Log.d("GPS", "Location changed");
                 }
 
                 @Deprecated
@@ -245,7 +279,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void ringtone(){
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
             ringtoneIsActive = true;
             controllerButton.setText("Stop Alarm");
             player = MediaPlayer.create(this, notification);
