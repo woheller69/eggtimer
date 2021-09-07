@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context="org.woheller69.eggtimer.MainActivity">
 
     <ImageView
@@ -31,9 +30,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:onClick="controlTimer"
-        android:text="-:--"
+        android:text="--:--"
         android:textSize="60sp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -120,7 +118,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:textSize="25sp"
-        android:textColor="@color/black"
         android:text="@string/instruction"
         app:layout_constraintTop_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"

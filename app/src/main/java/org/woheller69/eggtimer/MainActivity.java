@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private LocationListener locationListenerGPS;
 
     public void resetTimer() {
-        timerTextView.setText("-:--");
+        timerTextView.setText("--:--");
         countDownTimer.cancel();
         controllerButton.setText(getString(R.string.start));
         timerTextView.setEnabled(true);
