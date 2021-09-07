@@ -1,4 +1,4 @@
-With PerfectEggTimer you can cook eggs perfectly.
+With Smart EggTimer you can cook eggs perfectly.
 
 The cooking time is calculated depending on
 

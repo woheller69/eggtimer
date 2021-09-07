@@ -1,4 +1,13 @@
 <resources>
-    <string name="app_name">EggTimer</string>
+    <string name="app_name" translatable="false">Smart EggTimer</string>
+    <string name="instruction">Pierce the egg and add to boiling water </string>
+    <string name="start">Start</string>
+    <string name="soft">soft</string>
+    <string name="stop">Stop</string>
+    <string name="cookingtime">Remaining cooking time</string>
+    <string name="noPosition">No position available</string>
+    <string name="stopAlarm">Stop Alarm</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
 
 </resources>

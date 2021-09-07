@@ -1,4 +1,4 @@
-Mit PerfectEggTimer können Sie Eier perfekt kochen.
+Mit Smart EggTimer können Sie Eier perfekt kochen.
 
 Die Kochdauer wird berechnet abhängig von
 

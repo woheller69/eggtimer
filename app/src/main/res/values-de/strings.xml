@@ -1,0 +1,12 @@
+<resources>
+    <string name="instruction">Ei anstechen und in kochendes Wasser geben</string>
+    <string name="start">Start</string>
+    <string name="soft">weich</string>
+    <string name="stop">Stop</string>
+    <string name="cookingtime">Verbleibende Kochzeit</string>
+    <string name="noPosition">Keine Position verfügbar</string>
+    <string name="stopAlarm">Stop Alarm</string>
+    <string name="medium">mittel</string>
+    <string name="hard">hart</string>
+
+</resources>

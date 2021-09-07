@@ -50,7 +50,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="controlTimer"
-        android:text="Start"
+        android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.1" />
 
     <Spinner
-        android:id="@+id/spinnerSize"
+        android:id="@+id/spinnerConsistency"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
@@ -80,11 +80,11 @@
         android:scaleY="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/spinnerSize"
+        app:layout_constraintBottom_toTopOf="@id/spinnerConsistency"
         />
 
     <Spinner
-        android:id="@+id/spinnerTarget"
+        android:id="@+id/spinnerSize"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
@@ -112,7 +112,7 @@
  />
 
     <TextView
-        android:id="@+id/tutorial"
+        android:id="@+id/instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -121,7 +121,7 @@
         android:layout_marginTop="5dp"
         android:textSize="25sp"
         android:textColor="@color/black"
-        android:text="Ei anstechen und in kochendes Wasser geben"
+        android:text="@string/instruction"
         app:layout_constraintTop_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

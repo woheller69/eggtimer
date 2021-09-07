@@ -1,4 +1,4 @@
-# PerfectEggTimer
+# Smart EggTimer
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/EggTimer.png" width="150"/> 
 This application provides an egg timer which calculates the boiling time based on required consistency, altitude, start temperature, and egg size.
