@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int SOFT_EGG = 65;
     private final int MEDIUM_EGG = 71;
     private final int HARD_EGG = 85;
+    private final int S_EGG = 50;  //<53g
+    private final int M_EGG = 58;  //53...63g
+    private final int L_EGG = 68;  //63...73g
+    private final int XL_EGG = 76; //>73g
     private static final String[] eggSize = {"S", "M", "L", "XL"};
     private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "20°C"};
 
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Boolean ringtoneIsActive = false;
     private CountDownTimer countDownTimer;
 
-    private float Diameter;
+    private int weight;
     private int altitude=0;
     private int tFridge=10;
     private int tTarget=65;
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             double timeInMillis;
             requestLocation();
 
-            timeInMillis = (0.15*Diameter*Diameter*Math.log(2*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354-tTarget)))*60*1000;
+            timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354-tTarget)))*60*1000;
 
             countDownTimer = new CountDownTimer((long) timeInMillis, 1000) {
 
@@ -235,16 +239,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (parent==findViewById(R.id.spinnerSize)) {
             switch (position) {
                 case 0:
-                    Diameter = 4.1f;
+                    weight=S_EGG;
                     break;
                 case 1:
-                    Diameter = 4.225f;
+                    weight=M_EGG;
                     break;
                 case 2:
-                    Diameter = 4.46f;
+                    weight=L_EGG;
                     break;
                 case 3:
-                    Diameter = 4.83f;
+                    weight=XL_EGG;
                     break;
             }
         }else if (parent==findViewById(R.id.spinnerFridge)) {
