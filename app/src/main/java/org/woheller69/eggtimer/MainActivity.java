@@ -6,7 +6,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,10 +20,12 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import androidx.preference.PreferenceManager;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -55,6 +59,59 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MediaPlayer player;
     private LocationListener locationListenerGPS;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestLocation();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        String[] consistency = getResources().getStringArray(R.array.consistency);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+        initNotification();
+
+        setContentView(R.layout.activity_main);
+
+        timerTextView = (TextView) findViewById(R.id.timerTextView);
+        controllerButton = (Button) findViewById(R.id.controllerButton);
+
+        Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, eggSize);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEggSize.setAdapter(adapter);
+        spinnerEggSize.setSelection(1);
+        spinnerEggSize.setOnItemSelectedListener(this);
+
+        Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, fridgeTemperature);
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFridgeTemp.setAdapter(adapter2);
+        spinnerFridgeTemp.setSelection(2);
+        spinnerFridgeTemp.setOnItemSelectedListener(this);
+
+
+        Spinner spinnerTarget = (Spinner) findViewById(R.id.spinnerConsistency);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, consistency);
+
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTarget.setAdapter(adapter3);
+        spinnerTarget.setSelection(0);
+        spinnerTarget.setOnItemSelectedListener(this);
+
+    }
+
     public void resetTimer() {
         timerTextView.setText("--:--");
         countDownTimer.cancel();
@@ -79,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (ringtoneIsActive) {
             player.stop();
             cancelNotification();
+            starDialog();
             ringtoneIsActive=false;
             controllerButton.setText(getString(R.string.start));
         } else if (!counterIsActive) {
@@ -137,59 +195,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mNotificationManager.notify(1,builder.build());
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        requestLocation();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        String[] consistency = getResources().getStringArray(R.array.consistency);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-        initNotification();
-
-        setContentView(R.layout.activity_main);
-
-        timerTextView = (TextView) findViewById(R.id.timerTextView);
-        controllerButton = (Button) findViewById(R.id.controllerButton);
-
-        Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_item, eggSize);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEggSize.setAdapter(adapter);
-        spinnerEggSize.setSelection(1);
-        spinnerEggSize.setOnItemSelectedListener(this);
-
-        Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_item, fridgeTemperature);
-
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFridgeTemp.setAdapter(adapter2);
-        spinnerFridgeTemp.setSelection(2);
-        spinnerFridgeTemp.setOnItemSelectedListener(this);
-
-
-        Spinner spinnerTarget = (Spinner) findViewById(R.id.spinnerConsistency);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_item, consistency);
-
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTarget.setAdapter(adapter3);
-        spinnerTarget.setSelection(0);
-        spinnerTarget.setOnItemSelectedListener(this);
-
-    }
 
     private void requestLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
@@ -290,6 +295,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void starDialog(){
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefManager.getBoolean("askForStar",true))    {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage(R.string.dialog_StarOnGitHub);
+            alertDialogBuilder.setPositiveButton(getString(R.string.dialog_OK_button), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/woheller69/eggtimer")));
+                    setAskForStar(false);
+                }
+            });
+            alertDialogBuilder.setNegativeButton(getString(R.string.dialog_NO_button), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    setAskForStar(false);
+                }
+            });
+            alertDialogBuilder.setNeutralButton(getString(R.string.dialog_Later_button), null);
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+    }
+
+    public void setAskForStar(boolean askForStar){
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefManager.edit();
+        editor.putBoolean("askForStar", askForStar);
+        editor.apply();
     }
 
 }

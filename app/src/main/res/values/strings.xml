@@ -9,5 +9,9 @@
     <string name="stopAlarm">Stop Alarm</string>
     <string name="medium">medium</string>
     <string name="hard">hard</string>
+    <string name="dialog_OK_button">OK</string>
+    <string name="dialog_NO_button">No</string>
+    <string name="dialog_Later_button">Maybe later</string>
+    <string name="dialog_StarOnGitHub">Do you like this app? Please star it on GitHub.</string>
 
 </resources>

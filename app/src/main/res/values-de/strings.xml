@@ -8,5 +8,8 @@
     <string name="stopAlarm">Stop Alarm</string>
     <string name="medium">mittel</string>
     <string name="hard">hart</string>
-
+    <string name="dialog_OK_button">OK</string>
+    <string name="dialog_NO_button">Nein</string>
+    <string name="dialog_Later_button">Vielleicht später</string>
+    <string name="dialog_StarOnGitHub">Mögen Sie diese App? Bitte vergeben Sie einen Stern auf GitHub.</string>
 </resources>
