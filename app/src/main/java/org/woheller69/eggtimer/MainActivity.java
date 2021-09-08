@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -67,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume() {
         super.onResume();
         requestLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocation();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -199,6 +206,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mNotificationManager.notify(1,builder.build());
     }
 
+    private void stopLocation(){
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (locationListenerGPS!=null) locationManager.removeUpdates(locationListenerGPS);
+        locationListenerGPS=null;
+    }
 
     private void requestLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
@@ -293,8 +305,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             ringtoneIsActive = true;
             controllerButton.setText(getString(R.string.stopAlarm));
-            player = MediaPlayer.create(this, notification);
+            player = new MediaPlayer();
             player.setLooping(true);
+            player.setDataSource(this,notification);
+            player.setAudioStreamType(AudioManager.STREAM_ALARM);
+            player.prepare();
             player.start();
         } catch (Exception e) {
             e.printStackTrace();
