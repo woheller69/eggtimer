@@ -241,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (locationGPS != null) {
                 altitude = (int) locationGPS.getAltitude();
                 TextView altitudeTextView = findViewById(R.id.altitude);
-                altitudeTextView.setText(altitude +"m");
-            }else Toast.makeText(this.getApplicationContext(),getString(R.string.noPosition),Toast.LENGTH_SHORT).show();
+                altitudeTextView.setText(altitude +"\u2009m");
+            }else Toast.makeText(this.getApplicationContext(),getString(R.string.noPosition),Toast.LENGTH_LONG).show();
         }
     }
 
