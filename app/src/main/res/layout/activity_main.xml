@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
     tools:context="org.woheller69.eggtimer.MainActivity">
 
     <ImageView
@@ -15,6 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:paddingBottom="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.71" />
+        app:layout_constraintVertical_bias="0.61" />
 
     <Button
         android:id="@+id/controllerButton"
@@ -49,7 +51,7 @@
         android:layout_marginTop="8dp"
         android:onClick="controlTimer"
         android:text="@string/start"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerTextView"
@@ -116,7 +118,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-50dp"
         android:textSize="25sp"
         android:text="@string/instruction"
         app:layout_constraintTop_toBottomOf="@id/imageView"
