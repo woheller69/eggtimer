@@ -40,10 +40,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private final int SOFT_EGG = 65;
+    private final int SOFT_EGG = 66;
     private final int MEDIUM_EGG = 71;
     private final int HARD_EGG = 85;
-    private final int S_EGG = 50;  //<53g
+    private final int S_EGG = 48;  //<53g
     private final int M_EGG = 58;  //53...63g
     private final int L_EGG = 68;  //63...73g
     private final int XL_EGG = 76; //>73g
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int weight;
     private int altitude=0;
     private int tFridge=10;
-    private int tTarget=65;
+    private int tTarget=66;
     private MediaPlayer player;
     private LocationListener locationListenerGPS;
 
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ringtoneIsActive=false;
             controllerButton.setText(getString(R.string.start));
         } else if (!counterIsActive) {
-
+            if (player!=null) player.stop(); //just to be sure: stop old Mediaplayer
             counterIsActive = true;
             controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onTick(long l) {
                     updateTimer((int) l / 1000);
+                    if (l < 10000) clicktone();
                 }
 
                 @Override
@@ -300,11 +301,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void ringtone(){
+    public void clicktone() {
+            MediaPlayer.create(this,R.raw.click).start();   //not played through alarm channel
+    }
+
+            public void ringtone(){
         try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);  //play through alarm channel
             ringtoneIsActive = true;
             controllerButton.setText(getString(R.string.stopAlarm));
+            if (player!=null) player.stop();  //just to be sure: stop old Mediaplayer before new Mediaplayer is created
             player = new MediaPlayer();
             player.setLooping(true);
             player.setDataSource(this,notification);
