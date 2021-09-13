@@ -31,6 +31,7 @@ import android.view.View;
 
 import android.os.CountDownTimer;
 
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int altitude=0;
     private int tFridge=10;
     private int tTarget=66;
-    private MediaPlayer player;
+    private final MediaPlayer player = new MediaPlayer();
     private LocationListener locationListenerGPS;
 
     @Override
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void controlTimer(View view) {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         if (ringtoneIsActive) {
             player.stop();
             cancelNotification();
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ringtoneIsActive=false;
             controllerButton.setText(getString(R.string.start));
         } else if (!counterIsActive) {
-            if (player!=null) player.stop(); //just to be sure: stop old Mediaplayer
+            player.stop(); //just to be sure: stop old Mediaplayer
             counterIsActive = true;
             controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
@@ -159,12 +162,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354-tTarget)))*60*1000;
 
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
             countDownTimer = new CountDownTimer((long) timeInMillis, 1000) {
 
                 @Override
                 public void onTick(long l) {
                     updateTimer((int) l / 1000);
-                    if (l < 10000) clicktone();
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //reactivate SCREEN_ON while timer is running, when e.g. switching back from other app
                 }
 
                 @Override
@@ -301,22 +306,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void clicktone() {
-            MediaPlayer.create(this,R.raw.click).start();   //not played through alarm channel
-    }
-
-            public void ringtone(){
+        public void ringtone(){
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);  //play through alarm channel
             ringtoneIsActive = true;
             controllerButton.setText(getString(R.string.stopAlarm));
-            if (player!=null) player.stop();  //just to be sure: stop old Mediaplayer before new Mediaplayer is created
-            player = new MediaPlayer();
+            player.reset();
             player.setLooping(true);
             player.setDataSource(this,notification);
             player.setAudioStreamType(AudioManager.STREAM_ALARM);
             player.prepare();
             player.start();
+            CountDownTimer alarmduration = new CountDownTimer((long) 10000, 1000) {
+                @Override
+                public void onTick(long l) {
+                }
+
+                @Override
+                public void onFinish() {
+                    player.stop();
+                    ringtoneIsActive=false;
+                    controllerButton.setText(getString(R.string.start));
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    cancelNotification();
+                }
+            }.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
