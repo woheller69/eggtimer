@@ -1,4 +1,4 @@
 Modify weight of S-size egg
 Modify temperature for soft egg
-Add count down tick sound for final 10 seconds
+Keep screen on while cooking
 Bugfixes

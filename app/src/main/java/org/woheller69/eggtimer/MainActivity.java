@@ -222,10 +222,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-            locationListenerGPS = new LocationListener() {
+            if (locationListenerGPS==null) locationListenerGPS = new LocationListener() {
                 @Override
                 public void onLocationChanged(android.location.Location location) {
-                    altitude= (int) location.getAltitude();
+                    altitude = (int) location.getAltitude();
                 }
 
                 @Deprecated

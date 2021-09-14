@@ -1,4 +1,4 @@
 Gewicht von S-Ei geändert
 Temperatur für weiches Ei geändert
-Tick Sound für die letzten 10 Sekunden
+Bildschirm beim Kochen eingeschaltet lassen
 Bugfixes
