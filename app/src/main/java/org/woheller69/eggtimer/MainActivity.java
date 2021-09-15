@@ -2,17 +2,10 @@ package org.woheller69.eggtimer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -21,12 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-
-import androidx.preference.PreferenceManager;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -37,7 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -53,28 +41,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     private TextView timerTextView;
+    private TextView altitudeTextView;
     private Button controllerButton;
     private Boolean counterIsActive = false;
     private Boolean ringtoneIsActive = false;
     private CountDownTimer countDownTimer;
 
     private int weight;
-    private int altitude=0;
     private int tFridge=10;
     private int tTarget=66;
     private final MediaPlayer player = new MediaPlayer();
-    private LocationListener locationListenerGPS;
+    private final Context context = this;
 
     @Override
     protected void onResume() {
         super.onResume();
-        requestLocation();
+        Location.requestLocation(context,altitudeTextView);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopLocation();
+        Location.stopLocation(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -83,19 +71,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         String[] consistency = getResources().getStringArray(R.array.consistency);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-        initNotification();
+        checkLocationPermission();
+
+        Notification.initNotification(context);
 
         setContentView(R.layout.activity_main);
 
         timerTextView = (TextView) findViewById(R.id.timerTextView);
+        altitudeTextView = findViewById(R.id.altitude);
         controllerButton = (Button) findViewById(R.id.controllerButton);
 
         Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, eggSize);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerEggSize.setOnItemSelectedListener(this);
 
         Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, fridgeTemperature);
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -114,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         Spinner spinnerTarget = (Spinner) findViewById(R.id.spinnerConsistency);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, consistency);
 
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -122,6 +109,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerTarget.setSelection(0);
         spinnerTarget.setOnItemSelectedListener(this);
 
+    }
+
+    private void checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
     }
 
     public void resetTimer() {
@@ -141,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 + ":" + String.format("%02d", seconds);
 
         timerTextView.setText(timeRemaining);
-        showNotification(timeRemaining);
+        Notification.showNotification(context,timeRemaining);
     }
 
     public void controlTimer(View view) {
@@ -149,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if (ringtoneIsActive) {
             player.stop();
-            cancelNotification();
-            starDialog();
+            Notification.cancelNotification(context);
+            GithubStar.starDialog(context);
             ringtoneIsActive=false;
             controllerButton.setText(getString(R.string.start));
         } else if (!counterIsActive) {
@@ -158,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             counterIsActive = true;
             controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
-            requestLocation();
+            Location.requestLocation(context,altitudeTextView);
 
-            timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100-altitude*0.003354-tFridge)/(100-altitude*0.003354-tTarget)))*60*1000;
+            timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100- org.woheller69.eggtimer.Location.getAltitude() *0.003354-tFridge)/(100- org.woheller69.eggtimer.Location.getAltitude()*0.003354-tTarget)))*60*1000;
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -174,83 +168,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void onFinish() {
-                    showNotification("00:00");
+                    Notification.showNotification(context,"00:00");
                     resetTimer();
                     ringtone();
                 }
             }.start();
         } else {
             resetTimer();
-            cancelNotification();
+            Notification.cancelNotification(context);
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void initNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "EggTimer";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "EggTimer", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-    }
-
-    private void cancelNotification() {
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(1);
-    }
-
-    private void showNotification(String timeRemaining) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent pIntent = PendingIntent.getActivity(this,0, intent, 0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"EggTimer")
-                .setSmallIcon(R.drawable.egg_timer_transparent)
-                .setContentTitle(getString(R.string.cookingtime)).setContentText(timeRemaining).setSilent(true).setContentIntent(pIntent);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1,builder.build());
-    }
-
-    private void stopLocation(){
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if (locationListenerGPS!=null) locationManager.removeUpdates(locationListenerGPS);
-        locationListenerGPS=null;
-    }
-
-    private void requestLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-            if (locationListenerGPS==null) locationListenerGPS = new LocationListener() {
-                @Override
-                public void onLocationChanged(android.location.Location location) {
-                    altitude = (int) location.getAltitude();
-                }
-
-                @Deprecated
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-                }
-            };
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListenerGPS);
-            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (locationGPS != null) {
-                altitude = (int) locationGPS.getAltitude();
-                TextView altitudeTextView = findViewById(R.id.altitude);
-                altitudeTextView.setText(altitude +"\u2009m");
-            }else Toast.makeText(this.getApplicationContext(),getString(R.string.noPosition),Toast.LENGTH_LONG).show();
-        }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -313,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             controllerButton.setText(getString(R.string.stopAlarm));
             player.reset();
             player.setLooping(true);
-            player.setDataSource(this,notification);
+            player.setDataSource(context,notification);
             player.setAudioStreamType(AudioManager.STREAM_ALARM);
             player.prepare();
             player.start();
@@ -328,46 +256,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     ringtoneIsActive=false;
                     controllerButton.setText(getString(R.string.start));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    cancelNotification();
+                    Notification.cancelNotification(context);
                 }
             }.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    private void starDialog(){
-        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefManager.getBoolean("askForStar",true))    {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage(R.string.dialog_StarOnGitHub);
-            alertDialogBuilder.setPositiveButton(getString(R.string.dialog_OK_button), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/woheller69/eggtimer")));
-                    setAskForStar(false);
-                }
-            });
-            alertDialogBuilder.setNegativeButton(getString(R.string.dialog_NO_button), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setAskForStar(false);
-                }
-            });
-            alertDialogBuilder.setNeutralButton(getString(R.string.dialog_Later_button), null);
-
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-    }
-
-    public void setAskForStar(boolean askForStar){
-        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefManager.edit();
-        editor.putBoolean("askForStar", askForStar);
-        editor.apply();
-    }
-
 }
 
 
