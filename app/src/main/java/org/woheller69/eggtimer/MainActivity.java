@@ -3,17 +3,16 @@ package org.woheller69.eggtimer;
 import android.Manifest;
 import android.annotation.SuppressLint;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
+
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.view.View;
@@ -44,13 +43,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private TextView altitudeTextView;
     private Button controllerButton;
     private Boolean counterIsActive = false;
-    private Boolean ringtoneIsActive = false;
+
     private CountDownTimer countDownTimer;
 
     private int weight;
     private int tFridge=10;
     private int tTarget=66;
-    private final MediaPlayer player = new MediaPlayer();
     private final Context context = this;
 
     @Override
@@ -65,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Location.stopLocation(context);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         checkLocationPermission();
 
-        Notification.initNotification(context);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
 
         setContentView(R.layout.activity_main);
 
@@ -121,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void resetTimer() {
         timerTextView.setText("--:--");
         countDownTimer.cancel();
+        cancelAlarm();
         controllerButton.setText(getString(R.string.start));
         timerTextView.setEnabled(true);
         counterIsActive = false;
@@ -140,21 +138,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void controlTimer(View view) {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        if (ringtoneIsActive) {
-            player.stop();
+        if (!AlarmReceiver.isRingtoneActive() && controllerButton.getText()==getString(R.string.stopAlarm)) {
             Notification.cancelNotification(context);
             GithubStar.starDialog(context);
-            ringtoneIsActive=false;
+            controllerButton.setText(getString(R.string.start));
+        }else if (AlarmReceiver.isRingtoneActive()) {
+            AlarmReceiver.stopAlarmSound();
+            Notification.cancelNotification(context);
+            GithubStar.starDialog(context);
             controllerButton.setText(getString(R.string.start));
         } else if (!counterIsActive) {
-            player.stop(); //just to be sure: stop old Mediaplayer
+            AlarmReceiver.stopAlarmSound(); //just to be sure: stop old Mediaplayer
             counterIsActive = true;
             controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
             Location.requestLocation(context,altitudeTextView);
 
             timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100- org.woheller69.eggtimer.Location.getAltitude() *0.003354-tFridge)/(100- org.woheller69.eggtimer.Location.getAltitude()*0.003354-tTarget)))*60*1000;
+
+            setAlarm((long) timeInMillis);
+
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -170,7 +173,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 public void onFinish() {
                     Notification.showNotification(context,"00:00");
                     resetTimer();
-                    ringtone();
+                    AlarmReceiver.playAlarmSound(context);
+                    controllerButton.setText(getString(R.string.stopAlarm));
+
                 }
             }.start();
         } else {
@@ -179,6 +184,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    private void setAlarm(long timeInMillis) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
+    }
+
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        alarmManager.cancel(pendingIntent);
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -232,36 +250,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-        public void ringtone(){
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);  //play through alarm channel
-            ringtoneIsActive = true;
-            controllerButton.setText(getString(R.string.stopAlarm));
-            player.reset();
-            player.setLooping(true);
-            player.setDataSource(context,notification);
-            player.setAudioStreamType(AudioManager.STREAM_ALARM);
-            player.prepare();
-            player.start();
-            CountDownTimer alarmduration = new CountDownTimer((long) 10000, 1000) {
-                @Override
-                public void onTick(long l) {
-                }
-
-                @Override
-                public void onFinish() {
-                    player.stop();
-                    ringtoneIsActive=false;
-                    controllerButton.setText(getString(R.string.start));
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    Notification.cancelNotification(context);
-                }
-            }.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 
