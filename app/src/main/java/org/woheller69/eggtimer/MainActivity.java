@@ -15,6 +15,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -25,6 +26,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Boolean counterIsActive = false;
 
     private CountDownTimer countDownTimer;
+    private Timer countUpTimer;
 
     private int weight;
     private int tFridge=10;
@@ -117,36 +122,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void resetTimer() {
         timerTextView.setText("--:--");
+        if (countUpTimer!=null) countUpTimer.cancel();
         countDownTimer.cancel();
         cancelAlarm();
         controllerButton.setText(getString(R.string.start));
-        timerTextView.setEnabled(true);
+        timerTextView.setTextColor(altitudeTextView.getTextColors());
         counterIsActive = false;
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public void updateTimer(int secondsLeft) {
-        int minutes = (int) secondsLeft / 60;
-        int seconds = secondsLeft - minutes * 60;
+        int minutes = Math.abs(secondsLeft) / 60;
+        int seconds = Math.abs(secondsLeft) - minutes * 60;
 
-        String timeRemaining = String.format("%02d", minutes)
-                + ":" + String.format("%02d", seconds);
+        String timeRemaining = String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
 
-        timerTextView.setText(timeRemaining);
-        Notification.showNotification(context,timeRemaining);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                if (secondsLeft>=0){
+                    timerTextView.setText(timeRemaining);
+                    timerTextView.setTextColor(altitudeTextView.getTextColors());
+                }else{
+                    timerTextView.setText("-"+timeRemaining);
+                    timerTextView.setTextColor(ContextCompat.getColor(context,R.color.red));
+                }
+
+            }
+        });
+        if (secondsLeft>=0) Notification.showNotification(context,timeRemaining);
     }
 
     public void controlTimer(View view) {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if (!AlarmReceiver.isRingtoneActive() && controllerButton.getText()==getString(R.string.stopAlarm)) {
-            Notification.cancelNotification(context);
-            GithubStar.starDialog(context);
-            controllerButton.setText(getString(R.string.start));
-        }else if (AlarmReceiver.isRingtoneActive()) {
+        if  ((AlarmReceiver.isRingtoneActive()) || (!AlarmReceiver.isRingtoneActive() && controllerButton.getText()==getString(R.string.stopAlarm))) {
             AlarmReceiver.stopAlarmSound();
             Notification.cancelNotification(context);
             GithubStar.starDialog(context);
-            controllerButton.setText(getString(R.string.start));
+            resetTimer();
         } else if (!counterIsActive) {
             AlarmReceiver.stopAlarmSound(); //just to be sure: stop old Mediaplayer
             counterIsActive = true;
@@ -176,6 +190,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     AlarmReceiver.playAlarmSound(context);
                     controllerButton.setText(getString(R.string.stopAlarm));
 
+
+                    TimerTask timerTask;
+                    countUpTimer = new Timer();
+                    timerTask = new TimerTask() {
+                        int num=0;
+                        @Override
+                        public void run() {
+                            num--;
+                            updateTimer(num);
+                        }
+                    };
+                    countUpTimer.schedule(timerTask,0,1000);
                 }
             }.start();
         } else {
