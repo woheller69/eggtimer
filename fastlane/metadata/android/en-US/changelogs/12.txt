@@ -1,3 +1,4 @@
 Wake up device to play alarm
 Negative time is displayed when the timer has expired
+Added tick sound
 Bugfixes

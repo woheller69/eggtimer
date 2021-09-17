@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private CountDownTimer countDownTimer;
     private Timer countUpTimer;
+    private MediaPlayer mediaPlayer;
 
     private int weight;
     private int tFridge=10;
@@ -157,10 +159,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void controlTimer(View view) {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if  ((AlarmReceiver.isRingtoneActive()) || (!AlarmReceiver.isRingtoneActive() && controllerButton.getText()==getString(R.string.stopAlarm))) {
+            resetTimer();
             AlarmReceiver.stopAlarmSound();
             Notification.cancelNotification(context);
             GithubStar.starDialog(context);
-            resetTimer();
         } else if (!counterIsActive) {
             AlarmReceiver.stopAlarmSound(); //just to be sure: stop old Mediaplayer
             counterIsActive = true;
@@ -180,16 +182,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onTick(long l) {
                     updateTimer((int) l / 1000);
+
+                    mediaPlayer=MediaPlayer.create(context,R.raw.click);
+                    if (l>11000) {
+                        mediaPlayer.setVolume(0.05f, 0.05f);
+                    } else {
+                        mediaPlayer.setVolume(1, 1);
+                    }
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mp.reset();
+                            mp.release();
+                        }
+                    });
                     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //reactivate SCREEN_ON while timer is running, when e.g. switching back from other app
                 }
 
                 @Override
                 public void onFinish() {
                     Notification.showNotification(context,"00:00");
-                    resetTimer();
+                    counterIsActive = false;
                     AlarmReceiver.playAlarmSound(context);
                     controllerButton.setText(getString(R.string.stopAlarm));
-
 
                     TimerTask timerTask;
                     countUpTimer = new Timer();
@@ -214,7 +230,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
+        }
+
     }
 
     private void cancelAlarm() {

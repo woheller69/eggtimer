@@ -34,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                 @Override
                 public void onFinish() {
-                    player.stop();
+                    stopAlarmSound();
                 }
             }.start();
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public static  void stopAlarmSound(){
-        player.stop();
+            player.stop();
     }
 
     public static boolean isRingtoneActive(){
