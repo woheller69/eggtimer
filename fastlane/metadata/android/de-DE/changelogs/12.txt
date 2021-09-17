@@ -1,0 +1,3 @@
+Gerät aufwecken, um den Alarm abzuspielen
+Negative Zeit wird angezeigt, wenn der Timer abgelaufen ist
+Bugfixes
