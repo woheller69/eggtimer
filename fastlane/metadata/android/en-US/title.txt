@@ -1,1 +1,1 @@
-PerfectEggTimer
+Smart EggTimer
