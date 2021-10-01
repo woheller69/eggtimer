@@ -9,3 +9,9 @@ The formula is taken from here: https://khymos.org/2009/04/09/towards-the-perfec
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/org.woheller69.eggtimer/)
+
+
+## Used third-party libraries
+
+- AndroidX libraries (https://github.com/androidx/androidx) which is licensed under <a href='https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt'>Apache License Version 2.0</a>
+- 
