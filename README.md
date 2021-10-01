@@ -14,4 +14,4 @@ The formula is taken from here: https://khymos.org/2009/04/09/towards-the-perfec
 ## Used third-party libraries
 
 - AndroidX libraries (https://github.com/androidx/androidx) which is licensed under <a href='https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt'>Apache License Version 2.0</a>
-- 
+- Material Components for Android (https://github.com/material-components/material-components-android) which is licensed under <a href='https://github.com/material-components/material-components-android/blob/master/LICENSE'>Apache License Version 2.0</a>
