@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final Context context = this;
 
     @Override
+    public void onBackPressed(){
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Location.requestLocation(context,altitudeTextView);
