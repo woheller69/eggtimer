@@ -8,6 +8,7 @@ The cooking time is calculated depending on
 - the geographic altitude
 
 Minimum permissions:
-- Authorization for GPS 
+- Smart EggTimer requires only authorization for GPS. This is needed to get the altitude which is needed for calculation.
+  No data is sent over the Internet.
 
 

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -40,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int M_EGG = 58;  //53...63g
     private final int L_EGG = 68;  //63...73g
     private final int XL_EGG = 76; //>73g
-    private static final String[] eggSize = {"S", "M", "L", "XL"};
-    private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "20°C"};
+    private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
+    private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
 
 
     private TextView timerTextView;
@@ -267,6 +268,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 case 3:
                     weight=XL_EGG;
                     break;
+                case 4:
+                    weight=45;
+                    break;
+                case 5:
+                    weight=50;
+                    break;
+                case 6:
+                    weight=55;
+                    break;
+                case 7:
+                    weight=60;
+                    break;
+                case 8:
+                    weight=65;
+                    break;
+                case 9:
+                    weight=70;
+                    break;
+                case 10:
+                    weight=75;
+                    break;
+                case 11:
+                    weight=80;
+                    break;
             }
         }else if (parent==findViewById(R.id.spinnerFridge)) {
             switch (position) {
@@ -283,7 +308,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     tFridge = 12;
                     break;
                 case 4:
+                    tFridge = 15;
+                    break;
+                case 5:
                     tFridge = 20;
+                    break;
+                case 6:
+                    tFridge = 25;
+                    break;
+                case 7:
+                    tFridge = 30;
                     break;
             }
         }else if (parent==findViewById(R.id.spinnerConsistency)) {
@@ -303,6 +337,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void openGithub(View view) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/woheller69/eggtimer")));
     }
 }
 

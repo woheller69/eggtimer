@@ -10,6 +10,24 @@ The formula is taken from here: https://khymos.org/2009/04/09/towards-the-perfec
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/org.woheller69.eggtimer/)
 
+## Instructions
+
+Enter size of the egg. The egg sizes are as defined by the EU.
+
+| EU size | S | M | L | XL |
+| ------- | --- | --- |--- | --- |
+| Weight (g) | <53 | 53..63 | 63..73 | >73 |
+
+Enter temperature of the egg.
+
+Select desired consistency.
+
+Pierce the egg and put into boiling water. The egg must be fully covered with water.
+
+## Permissions
+
+The app requires only authorization for GPS. This is needed to get the altitude which is needed for calculation.
+This information is used only within the app. Nothing is sent via the internet.
 
 ## Used third-party libraries
 

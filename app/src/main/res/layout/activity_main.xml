@@ -126,4 +126,15 @@
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="center_horizontal" />
 
+    <ImageButton
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openGithub"
+        app:srcCompat="@android:drawable/ic_menu_info_details"
+ />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

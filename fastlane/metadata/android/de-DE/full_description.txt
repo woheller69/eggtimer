@@ -8,6 +8,7 @@ Die Kochdauer wird berechnet abhängig von
 - der geographischen Höhe
 
 Minimale Berechtigungen:
-- Berechtigung für GPS
+- Smart EggTimer erfordert nur eine Autorisierung für GPS. Dies wird benötigt, um die Höhe zu erhalten, die für die Berechnung benötigt wird.
+  Es werden keine Daten über das Internet verschickt.
 
 
