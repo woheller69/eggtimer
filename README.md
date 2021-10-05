@@ -12,6 +12,8 @@ The formula is taken from here: https://khymos.org/2009/04/09/towards-the-perfec
 
 ## Instructions
 
+Place the phone at a position with GPS reception and wait until your altitude is shown.
+
 Enter size of the egg. The egg sizes are as defined by the EU.
 
 | EU size | S | M | L | XL |
@@ -23,6 +25,8 @@ Enter temperature of the egg.
 Select desired consistency.
 
 Pierce the egg and put into boiling water. The egg must be fully covered with water.
+
+Press the START button.
 
 ## Permissions
 

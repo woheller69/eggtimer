@@ -11,13 +11,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EggTimer">
+        android:theme="@style/Theme.EggTimer.NoActionBar">
+
+        <activity android:name=".Tutorial">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.EggTimer.NoActionBar">
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

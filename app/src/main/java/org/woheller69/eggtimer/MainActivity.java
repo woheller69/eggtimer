@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -339,8 +338,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void openGithub(View view) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/woheller69/eggtimer")));
+    public void showTutorial(View view) {
+        Intent intent = new Intent(this, Tutorial.class);
+        startActivity(intent);
     }
 }
 
