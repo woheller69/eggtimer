@@ -26,7 +26,7 @@ Pierce the egg and put into boiling water. The egg must be fully covered with wa
 
 ## Permissions
 
-The app requires only authorization for GPS. This is needed to get the altitude which is needed for calculation.
+The app requires only authorization for GPS. This is needed to get the altitude which is used for calculation.
 This information is used only within the app. Nothing is sent via the internet.
 
 ## Used third-party libraries

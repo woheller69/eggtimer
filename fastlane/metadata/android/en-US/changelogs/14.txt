@@ -1,0 +1,4 @@
+Optional selection of weight instead of weight category
+Additional options for start temperature
+Link to project on GitHub
+Bugfixes

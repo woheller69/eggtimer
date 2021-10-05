@@ -1,0 +1,4 @@
+Optionale Auswahl des Gewichts anstelle der Gewichtsklasse
+Zusätzliche Möglichkeiten für die Starttemperatur
+Verweis auf die Projectseite bei GitHub
+Bugfixes
