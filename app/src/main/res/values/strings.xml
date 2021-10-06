@@ -6,6 +6,7 @@
     <string name="stop">Stop</string>
     <string name="cookingtime">Remaining cooking time</string>
     <string name="noAltitude">Altitude not available</string>
+    <string name="noGPS">GPS permission missing</string>
     <string name="stopAlarm">Stop Alarm</string>
     <string name="medium">medium</string>
     <string name="hard">hard</string>

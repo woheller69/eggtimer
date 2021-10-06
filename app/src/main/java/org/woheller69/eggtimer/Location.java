@@ -56,7 +56,6 @@ public class Location {
                 altitude = (int) locationGPS.getAltitude();
                 altitudeTextView.setText(altitude +"\u2009m");
             }else Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude),Toast.LENGTH_LONG).show();
-        }
+        }else Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
     }
-
 }
