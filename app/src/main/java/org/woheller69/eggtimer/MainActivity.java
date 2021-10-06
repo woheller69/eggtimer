@@ -34,7 +34,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final int SOFT_EGG = 66;
-    private final int MEDIUM_EGG = 71;
+    private final int MEDIUM_EGG = 72;
     private final int HARD_EGG = 85;
     private final int S_EGG = 48;  //<53g
     private final int M_EGG = 58;  //53...63g
