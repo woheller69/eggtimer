@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.media.MediaPlayer;
@@ -17,6 +18,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int L_EGG = 68;  //63...73g
     private final int XL_EGG = 76; //>73g
     private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
-    private static final String[] fridgeTemperature = {"6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
+    private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
 
 
     private TextView timerTextView;
@@ -54,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MediaPlayer mediaPlayer;
 
     private int weight;
-    private int tFridge=10;
-    private int tTarget=66;
+    private int tFridge;
+    private int tTarget;
     private final Context context = this;
 
     @Override
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String[] consistency = getResources().getStringArray(R.array.consistency);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         checkLocationPermission();
 
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEggSize.setAdapter(adapter);
-        spinnerEggSize.setSelection(1);
+        spinnerEggSize.setSelection(sp.getInt("eggsize",1));
         spinnerEggSize.setOnItemSelectedListener(this);
 
         Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
@@ -105,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFridgeTemp.setAdapter(adapter2);
-        spinnerFridgeTemp.setSelection(2);
+        spinnerFridgeTemp.setSelection(sp.getInt("fridgetemp",3));
         spinnerFridgeTemp.setOnItemSelectedListener(this);
 
 
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTarget.setAdapter(adapter3);
-        spinnerTarget.setSelection(0);
+        spinnerTarget.setSelection(sp.getInt("consistency",0));
         spinnerTarget.setOnItemSelectedListener(this);
 
     }
@@ -253,7 +257,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
         if (parent==findViewById(R.id.spinnerSize)) {
+            editor.putInt("eggsize",position);
+            editor.apply();
             switch (position) {
                 case 0:
                     weight=S_EGG;
@@ -293,33 +301,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
             }
         }else if (parent==findViewById(R.id.spinnerFridge)) {
+            editor.putInt("fridgetemp",position);
+            editor.apply();
             switch (position) {
                 case 0:
-                    tFridge = 6;
+                    tFridge = 4;
                     break;
                 case 1:
-                    tFridge = 8;
+                    tFridge = 6;
                     break;
                 case 2:
-                    tFridge = 10;
+                    tFridge = 8;
                     break;
                 case 3:
-                    tFridge = 12;
+                    tFridge = 10;
                     break;
                 case 4:
-                    tFridge = 15;
+                    tFridge = 12;
                     break;
                 case 5:
-                    tFridge = 20;
+                    tFridge = 15;
                     break;
                 case 6:
-                    tFridge = 25;
+                    tFridge = 20;
                     break;
                 case 7:
+                    tFridge = 25;
+                    break;
+                case 8:
                     tFridge = 30;
                     break;
             }
         }else if (parent==findViewById(R.id.spinnerConsistency)) {
+            editor.putInt("consistency",position);
+            editor.apply();
             switch (position) {
                 case 0:
                     tTarget=SOFT_EGG;

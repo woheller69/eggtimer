@@ -1,5 +1,4 @@
 <resources>
-    <string name="instruction">Ei anstechen und in kochendes Wasser geben</string>
     <string name="start">Start</string>
     <string name="soft">weich</string>
     <string name="stop">Stop</string>
