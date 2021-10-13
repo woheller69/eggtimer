@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onDestroy(){
-        super.onDestroy();
-        resetTimer();
         cancelAlarm();
+        countDownTimer.cancel();
         Notification.cancelNotification(this);
+        super.onDestroy();
     }
 
     @Override
