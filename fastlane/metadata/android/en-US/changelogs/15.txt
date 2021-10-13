@@ -1,0 +1,5 @@
+Added tutorial
+Layout changes
+Added 4°C as start temperature
+Save settings
+Bugfixes

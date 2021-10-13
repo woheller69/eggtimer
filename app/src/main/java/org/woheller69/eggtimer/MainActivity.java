@@ -79,6 +79,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        resetTimer();
+        cancelAlarm();
+        Notification.cancelNotification(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String[] consistency = getResources().getStringArray(R.array.consistency);
