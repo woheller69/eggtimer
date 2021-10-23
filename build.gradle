@@ -2,8 +2,9 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
+
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.2"
 
@@ -15,7 +16,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
