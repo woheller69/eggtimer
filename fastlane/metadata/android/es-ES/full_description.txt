@@ -1,0 +1,12 @@
+Con Smart EggTimer podrá cocinar huevos perfectamente.
+
+El tiempo de cocción se calcula en función de
+
+- la consistencia deseada
+- el tamaño del huevo
+- la temperatura inicial
+- la altitud geográfica
+
+Permisos mínimos:
+- Smart EggTimer sólo requiere autorización para el GPS. Esto es necesario para obtener la altitud que se emplea en el cálculo.
+  No se envía ningún dato por Internet.
