@@ -5,6 +5,16 @@
         <item>@string/soft</item>
         <item>@string/medium</item>
         <item>@string/hard</item>
+        <item>66°C</item>
+        <item>68°C</item>
+        <item>70°C</item>
+        <item>72°C</item>
+        <item>74°C</item>
+        <item>76°C</item>
+        <item>78°C</item>
+        <item>80°C</item>
+        <item>82°C</item>
+        <item>84°C</item>
     </string-array>
 
 </resources>

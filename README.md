@@ -22,7 +22,7 @@ Enter size of the egg. The egg sizes are as defined by the EU.
 
 Enter temperature of the egg.
 
-Select desired consistency.
+Select desired consistency or core temperature.
 
 Pierce the egg and put into boiling water. The egg must be fully covered with water.
 

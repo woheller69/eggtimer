@@ -36,15 +36,18 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private final int SOFT_EGG = 66;
-    private final int MEDIUM_EGG = 72;
-    private final int HARD_EGG = 85;
-    private final int S_EGG = 48;  //<53g
-    private final int M_EGG = 58;  //53...63g
-    private final int L_EGG = 68;  //63...73g
-    private final int XL_EGG = 76; //>73g
+    // SOFT_EGG = 66; Core temperature
+    //MEDIUM_EGG = 72;
+    //HARD_EGG = 85;
+    //S_EGG = 48;  //<53g
+    //M_EGG = 58;  //53...63g
+    //L_EGG = 68;  //63...73g
+    //XL_EGG = 76; //>73g
     private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
+    private static final int[] eggWeight = {48,58,68,76,45,50,55,60,65,70,75,80};
     private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
+    private static final int[] fridgeTemperatureVal = {4,6,8,10,12,15,20,25,30};
+    private static final int[] coreTemperature = {66,72,85,66,68,70,72,74,76,78,80,82,84};
 
 
     private TextView timerTextView;
@@ -270,90 +273,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (parent==findViewById(R.id.spinnerSize)) {
             editor.putInt("eggsize",position);
             editor.apply();
-            switch (position) {
-                case 0:
-                    weight=S_EGG;
-                    break;
-                case 1:
-                    weight=M_EGG;
-                    break;
-                case 2:
-                    weight=L_EGG;
-                    break;
-                case 3:
-                    weight=XL_EGG;
-                    break;
-                case 4:
-                    weight=45;
-                    break;
-                case 5:
-                    weight=50;
-                    break;
-                case 6:
-                    weight=55;
-                    break;
-                case 7:
-                    weight=60;
-                    break;
-                case 8:
-                    weight=65;
-                    break;
-                case 9:
-                    weight=70;
-                    break;
-                case 10:
-                    weight=75;
-                    break;
-                case 11:
-                    weight=80;
-                    break;
-            }
+            weight = eggWeight[position];
         }else if (parent==findViewById(R.id.spinnerFridge)) {
             editor.putInt("fridgetemp",position);
             editor.apply();
-            switch (position) {
-                case 0:
-                    tFridge = 4;
-                    break;
-                case 1:
-                    tFridge = 6;
-                    break;
-                case 2:
-                    tFridge = 8;
-                    break;
-                case 3:
-                    tFridge = 10;
-                    break;
-                case 4:
-                    tFridge = 12;
-                    break;
-                case 5:
-                    tFridge = 15;
-                    break;
-                case 6:
-                    tFridge = 20;
-                    break;
-                case 7:
-                    tFridge = 25;
-                    break;
-                case 8:
-                    tFridge = 30;
-                    break;
-            }
+            tFridge = fridgeTemperatureVal[position];
         }else if (parent==findViewById(R.id.spinnerConsistency)) {
             editor.putInt("consistency",position);
             editor.apply();
-            switch (position) {
-                case 0:
-                    tTarget=SOFT_EGG;
-                    break;
-                case 1:
-                    tTarget=MEDIUM_EGG;
-                    break;
-                case 2:
-                    tTarget=HARD_EGG;
-                    break;
-            }
+            tTarget=coreTemperature[position];
         }
     }
     @Override

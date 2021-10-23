@@ -1,5 +1,5 @@
 Tutorial hinzugefügt
 Layoutänderungen
-4°C als Starttemperature hinzugefügt
+4°C als Starttemperatur hinzugefügt
 Einstellungen speichern
 Bugfixes
