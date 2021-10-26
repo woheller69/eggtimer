@@ -1,0 +1,2 @@
+Added option for selection of desired core temperature
+Spanish translation
