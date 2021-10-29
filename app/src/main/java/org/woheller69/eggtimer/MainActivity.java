@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onBackPressed(){
-
+        if(!counterIsActive) super.onBackPressed();
     }
 
     @Override
