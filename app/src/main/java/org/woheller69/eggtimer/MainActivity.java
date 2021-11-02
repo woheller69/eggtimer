@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onDestroy(){
         cancelAlarm();
-        countDownTimer.cancel();
+        if (countDownTimer!=null) countDownTimer.cancel();
         Notification.cancelNotification(this);
         super.onDestroy();
     }
