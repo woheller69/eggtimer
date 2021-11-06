@@ -18,8 +18,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import android.os.CountDownTimer;

@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
-    tools:context="org.woheller69.eggtimer.Tutorial">
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        tools:context="org.woheller69.eggtimer.Tutorial"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/Instruction1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:textSize="35sp"
         android:text="@string/instructions" />
@@ -29,31 +25,26 @@
         android:id="@+id/Instruction2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Instruction1"
         android:padding="15dp"
         android:textSize="20sp"
         android:text="@string/instruction_text" />
 
-    <ImageButton
-        android:id="@+id/GithubButton"
-        android:layout_width="150sp"
-        android:layout_height="62sp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Instruction2"
-        android:background="@drawable/rounded_button"
-        android:src="@drawable/github_logo"
-        android:onClick="openGithub"
-        />
-<Space
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/GithubButton"
-    android:layout_width="match_parent"
-    android:layout_height="15dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:id="@+id/GithubButton"
+            android:layout_width="150sp"
+            android:layout_height="62sp"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="20dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/github_logo"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
