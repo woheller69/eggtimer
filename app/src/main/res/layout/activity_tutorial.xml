@@ -31,12 +31,12 @@
 
 
         <LinearLayout
-            android:id="@+id/GithubButton"
             android:layout_width="150sp"
             android:layout_height="62sp"
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="20dp">
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/GithubButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
