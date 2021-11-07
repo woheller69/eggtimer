@@ -1,1 +1,1 @@
-Smart EggTimer
+Smart EggTimer (Temporizador de huevo)

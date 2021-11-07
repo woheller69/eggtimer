@@ -2,6 +2,7 @@ package org.woheller69.eggtimer;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 public class Location {
 
@@ -27,6 +30,8 @@ public class Location {
     }
 
     static void requestLocation(Context context, TextView altitudeTextView) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        altitude=sp.getInt("altitude",0);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -34,6 +39,7 @@ public class Location {
                 @Override
                 public void onLocationChanged(android.location.Location location) {
                     altitude = (int) location.getAltitude();
+                    sp.edit().putInt("altitude",altitude).apply();
                 }
 
                 @Deprecated
@@ -54,8 +60,18 @@ public class Location {
             android.location.Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (locationGPS != null) {
                 altitude = (int) locationGPS.getAltitude();
+                sp.edit().putInt("altitude",altitude).apply();
                 altitudeTextView.setText(altitude +"\u2009m");
-            }else Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude),Toast.LENGTH_LONG).show();
-        }else Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
+                altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
+            }else {
+                Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude),Toast.LENGTH_LONG).show();
+                altitudeTextView.setText(altitude +"\u2009m");
+                altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
+            }
+        }else {
+            Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
+            altitudeTextView.setText(altitude +"\u2009m");
+            altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
+        }
     }
 }

@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         countDownTimer.cancel();
         cancelAlarm();
         controllerButton.setText(getString(R.string.start));
-        timerTextView.setTextColor(altitudeTextView.getTextColors());
+        timerTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
         counterIsActive = false;
     }
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // This code will always run on the UI thread, therefore is safe to modify UI elements.
                 if (secondsLeft>=0){
                     timerTextView.setText(timeRemaining);
-                    timerTextView.setTextColor(altitudeTextView.getTextColors());
+                    timerTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
                 }else{
                     timerTextView.setText("-"+timeRemaining);
                     timerTextView.setTextColor(ContextCompat.getColor(context,R.color.red));
