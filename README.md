@@ -4,7 +4,7 @@
 This application provides an egg timer which calculates the boiling time according to the formula derived by Dr. Charles D. H. Williams,
 based on required consistency, altitude, start temperature, and egg weight.
 
-The formula is taken from here: https://khymos.org/2009/04/09/towards-the-perfect-soft-boiled-egg/
+The formula is taken from here: http://newton.ex.ac.uk/teaching/CDHW/egg/
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
