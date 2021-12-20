@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //M_EGG = 58;  //53...63g
     //L_EGG = 68;  //63...73g
     //XL_EGG = 76; //>73g
-    private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
+    private static final String[] eggSize = {"S (EU)", "M (EU)", "L (EU)", "XL (EU)", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
     private static final int[] eggWeight = {48,58,68,76,45,50,55,60,65,70,75,80};
     private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
     private static final int[] fridgeTemperatureVal = {4,6,8,10,12,15,20,25,30};
