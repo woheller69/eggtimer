@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private TextView altitudeTextView;
     private Button controllerButton;
     private Boolean counterIsActive = false;
+    private Boolean countUpTimerIsActive = false;
 
     private CountDownTimer countDownTimer;
     private Timer countUpTimer;
@@ -63,6 +65,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int tFridge;
     private int tTarget;
     private final Context context = this;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        initViews();
+        Location.requestLocation(context,altitudeTextView);
+        if (!counterIsActive && !countUpTimerIsActive) controllerButton.setText(getString(R.string.start));
+        else if (countUpTimerIsActive)controllerButton.setText(getString(R.string.stopAlarm));
+        else controllerButton.setText(getString(R.string.stop));
+    }
+
+    private void initViews() {
+        setContentView(R.layout.activity_main);
+        timerTextView = (TextView) findViewById(R.id.timerTextView);
+        altitudeTextView = findViewById(R.id.altitude);
+        controllerButton = (Button) findViewById(R.id.controllerButton);
+
+        String[] consistency = getResources().getStringArray(R.array.consistency);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, eggSize);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEggSize.setAdapter(adapter);
+        spinnerEggSize.setSelection(sp.getInt("eggsize",1));
+        spinnerEggSize.setOnItemSelectedListener(this);
+
+        Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, fridgeTemperature);
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFridgeTemp.setAdapter(adapter2);
+        spinnerFridgeTemp.setSelection(sp.getInt("fridgetemp",3));
+        spinnerFridgeTemp.setOnItemSelectedListener(this);
+
+
+        Spinner spinnerTarget = (Spinner) findViewById(R.id.spinnerConsistency);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, consistency);
+
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTarget.setAdapter(adapter3);
+        spinnerTarget.setSelection(sp.getInt("consistency",0));
+        spinnerTarget.setOnItemSelectedListener(this);
+    }
 
     @Override
     public void onBackPressed(){
@@ -92,46 +141,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] consistency = getResources().getStringArray(R.array.consistency);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
         checkLocationPermission();
 
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
 
-        setContentView(R.layout.activity_main);
-
-        timerTextView = (TextView) findViewById(R.id.timerTextView);
-        altitudeTextView = findViewById(R.id.altitude);
-        controllerButton = (Button) findViewById(R.id.controllerButton);
-
-        Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                android.R.layout.simple_spinner_item, eggSize);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEggSize.setAdapter(adapter);
-        spinnerEggSize.setSelection(sp.getInt("eggsize",1));
-        spinnerEggSize.setOnItemSelectedListener(this);
-
-        Spinner spinnerFridgeTemp = (Spinner) findViewById(R.id.spinnerFridge);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(context,
-                android.R.layout.simple_spinner_item, fridgeTemperature);
-
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFridgeTemp.setAdapter(adapter2);
-        spinnerFridgeTemp.setSelection(sp.getInt("fridgetemp",3));
-        spinnerFridgeTemp.setOnItemSelectedListener(this);
-
-
-        Spinner spinnerTarget = (Spinner) findViewById(R.id.spinnerConsistency);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(context,
-                android.R.layout.simple_spinner_item, consistency);
-
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTarget.setAdapter(adapter3);
-        spinnerTarget.setSelection(sp.getInt("consistency",0));
-        spinnerTarget.setOnItemSelectedListener(this);
+        initViews();
 
     }
 
@@ -150,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         controllerButton.setText(getString(R.string.start));
         timerTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
         counterIsActive = false;
+        countUpTimerIsActive = false;
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
@@ -224,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 public void onFinish() {
                     Notification.showNotification(context,"00:00");
                     counterIsActive = false;
+                    countUpTimerIsActive = true;
                     AlarmReceiver.playAlarmSound(context);
                     controllerButton.setText(getString(R.string.stopAlarm));
 
