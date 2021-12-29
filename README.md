@@ -25,6 +25,7 @@ Enter temperature of the egg.
 Select desired consistency or core temperature.
 
 Pierce the egg and put into boiling water. The egg must be fully covered with water.
+Let the water boil slightly.
 
 Press the START button.
 
