@@ -1,0 +1,17 @@
+<resources>
+    <string name="start">Başlat</string>
+    <string name="soft">yumuşak (66°C)</string>
+    <string name="stop">Durdur</string>
+    <string name="cookingtime">Kalan pişirme süresi</string>
+    <string name="noAltitude">Rakım kullanılabilir değil</string>
+    <string name="noGPS">GPS izni eksik</string>
+    <string name="stopAlarm">Alarmı Durdur</string>
+    <string name="medium">orta (72°C)</string>
+    <string name="hard">katı (85°C)</string>
+    <string name="dialog_OK_button">Tamam</string>
+    <string name="dialog_NO_button">Hayır</string>
+    <string name="dialog_Later_button">Belki daha sonra</string>
+    <string name="dialog_StarOnGitHub">Bu uygulamayı beğendiniz mi? Lütfen GitHub\'da yıldız verin.</string>
+    <string name="instructions">Talimatlar</string>
+    <string name="instruction_text">Telefonu GPS alımı olan bir konuma yerleştirin ve rakımınız gösterilene kadar bekleyin.\n\nYumurtanın boyutunu girin. Yumurta boyutları AB\'de tanımlandığı gibidir. \n\nYumurtanın sıcaklığını girin.\n\nİstenen kıvamı veya çekirdek sıcaklığını seçin. \n\nYumurtayı delin ve kaynar suya koyun. Yumurta tamamen su ile kaplanmalıdır! Suyun hafifçe kaynamasına izin verin. \n\nBAŞLAT düğmesine basın. \n\nDaha fazla bilgi için lütfen GitHub\'daki proje sayfasını ziyaret edin.</string>
+</resources>

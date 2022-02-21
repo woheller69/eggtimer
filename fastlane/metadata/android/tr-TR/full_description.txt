@@ -1,0 +1,12 @@
+Smart EggTimer ile yumurtaları mükemmel şekilde pişirebilirsiniz.
+
+Pişirme süresi, aşağıdakilere bağlı olarak hesaplanır:
+
+- istenen kıvam
+- yumurtanın boyutu
+- başlangıç sıcaklığı
+- coğrafi rakım
+
+Asgari izinler:
+- Smart EggTimer, yalnızca GPS için yetkilendirme gerektirir. Bu, hesaplama için kullanılan rakımı elde etmek için gereklidir.
+  İnternet üzerinden hiçbir veri gönderilmez.
