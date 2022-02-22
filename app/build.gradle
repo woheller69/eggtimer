@@ -10,8 +10,8 @@ android {
         applicationId "org.woheller69.eggtimer"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 19
-        versionName "1.9"
+        versionCode 20
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
