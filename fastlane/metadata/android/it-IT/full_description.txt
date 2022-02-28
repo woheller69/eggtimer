@@ -1,0 +1,14 @@
+Con Smart EggTimer puoi cuocere le uova perfettamente.
+
+Il tempo di cottura viene calcolato in base a
+
+- la consistenza desiderata
+- la dimensione dell'uovo
+- la temperatura iniziale
+- l'altitudine geografica
+
+Autorizzazioni minime:
+- Smart EggTimer richiede solo l'autorizzazione per il GPS. Questo è necessario per ottenere l'altitudine che viene utilizzata per il calcolo.
+  Nessun dato viene inviato su Internet.
+
+
