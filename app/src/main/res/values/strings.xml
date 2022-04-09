@@ -15,4 +15,6 @@
     <string name="dialog_StarOnGitHub">Do you like this app? Please star it on GitHub.</string>
     <string name="instructions">Instructions</string>
     <string name="instruction_text">Place the phone at a position with GPS reception and wait until your altitude is shown.\n\nEnter size of the egg. The egg sizes are as defined in the EU. \n\nEnter temperature of the egg.\n\nSelect desired consistency or core temperature. \n\nPierce the egg and put into boiling water. The egg must be fully covered with water! Let the water boil slightly. \n\nPress the START button. \n\nFor more information please visit the project on GitHub.</string>
+    <string name="dialog_Cancel_button">Cancel</string>
+    <string name="dialog_Enter_altitude">Altitude m</string>
 </resources>

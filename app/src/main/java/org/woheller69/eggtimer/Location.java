@@ -74,4 +74,10 @@ public class Location {
             altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
         }
     }
+
+    public static void setAltitude(Context context, int altitude) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        Location.altitude = altitude;
+        sp.edit().putInt("altitude", Location.altitude).apply();
+    }
 }

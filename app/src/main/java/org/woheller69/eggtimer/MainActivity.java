@@ -7,6 +7,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,11 +17,13 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
+import android.text.InputType;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -29,6 +32,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -308,6 +312,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void showTutorial(View view) {
         Intent intent = new Intent(this, Tutorial.class);
         startActivity(intent);
+    }
+
+    public void setAltitude(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(context.getString(R.string.dialog_Enter_altitude));
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        alert.setView(input);
+        alert.setPositiveButton(context.getString(R.string.dialog_OK_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                int altitude= Integer.parseInt(input.getText().toString());
+                Location.setAltitude(context,altitude);
+                altitudeTextView.setText(altitude +"\u2009m");
+            }
+        });
+        alert.setNegativeButton(context.getString(R.string.dialog_Cancel_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Put actions for CANCEL button here, or leave in blank
+            }
+        });
+        alert.show();
     }
 }
 

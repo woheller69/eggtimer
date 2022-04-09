@@ -14,4 +14,6 @@
     <string name="dialog_StarOnGitHub">Bu uygulamayı beğendiniz mi? Lütfen GitHub\'da yıldız verin.</string>
     <string name="instructions">Talimatlar</string>
     <string name="instruction_text">Telefonu GPS alımı olan bir konuma yerleştirin ve rakımınız gösterilene kadar bekleyin.\n\nYumurtanın boyutunu girin. Yumurta boyutları AB\'de tanımlandığı gibidir. \n\nYumurtanın sıcaklığını girin.\n\nİstenen kıvamı veya çekirdek sıcaklığını seçin. \n\nYumurtayı delin ve kaynar suya koyun. Yumurta tamamen su ile kaplanmalıdır! Suyun hafifçe kaynamasına izin verin. \n\nBAŞLAT düğmesine basın. \n\nDaha fazla bilgi için lütfen GitHub\'daki proje sayfasını ziyaret edin.</string>
+    <string name="dialog_Cancel_button">Iptal</string>
+    <string name="dialog_Enter_altitude">Yükseklik m</string>
 </resources>
