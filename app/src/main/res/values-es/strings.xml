@@ -3,7 +3,7 @@
     <string name="soft">suave (66°C)</string>
     <string name="stop">Detener</string>
     <string name="cookingtime">Tiempo de cocción restante</string>
-    <string name="noAltitude">Sin altitud disponible</string>
+    <string name="noAltitude">Altitud GPS no disponible</string>
     <string name="noGPS">Permiso GPS ausente</string>
     <string name="stopAlarm">Detener Alarma</string>
     <string name="medium">medio (72°C)</string>

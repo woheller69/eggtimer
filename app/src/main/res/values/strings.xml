@@ -4,7 +4,7 @@
     <string name="soft">soft (66°C)</string>
     <string name="stop">Stop</string>
     <string name="cookingtime">Remaining cooking time</string>
-    <string name="noAltitude">Altitude not available</string>
+    <string name="noAltitude">GPS altitude not available</string>
     <string name="noGPS">GPS permission missing</string>
     <string name="stopAlarm">Stop Alarm</string>
     <string name="medium">medium (72°C)</string>

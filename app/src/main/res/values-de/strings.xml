@@ -3,7 +3,7 @@
     <string name="soft">weich (66°C)</string>
     <string name="stop">Stop</string>
     <string name="cookingtime">Verbleibende Kochzeit</string>
-    <string name="noAltitude">Höhe nicht verfügbar</string>
+    <string name="noAltitude">GPS-Höhe nicht verfügbar</string>
     <string name="noGPS">GPS Berechtigung fehlt</string>
     <string name="stopAlarm">Stop Alarm</string>
     <string name="medium">mittel (72°C)</string>
