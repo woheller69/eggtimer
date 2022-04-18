@@ -1,0 +1,2 @@
+Option: Manually enter altitude
+Bugfix: Alarm sound Android 12

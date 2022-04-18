@@ -1,0 +1,2 @@
+Option: Höheneingabe manuell
+Bugfix: Alarmsound Android 12
