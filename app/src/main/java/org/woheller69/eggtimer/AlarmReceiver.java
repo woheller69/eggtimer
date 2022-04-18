@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static void playAlarmSound(Context context){
         try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);  //play through alarm channel
+            Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);  //play through alarm channel
             player.reset();
             player.setLooping(true);
             player.setDataSource(context,notification);
