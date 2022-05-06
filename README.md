@@ -38,3 +38,9 @@ This information is used only within the app. Nothing is sent via the internet.
 
 - AndroidX libraries (https://github.com/androidx/androidx) which is licensed under <a href='https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt'>Apache License Version 2.0</a>
 - Material Components for Android (https://github.com/material-components/material-components-android) which is licensed under <a href='https://github.com/material-components/material-components-android/blob/master/LICENSE'>Apache License Version 2.0</a>
+
+## Try my other apps
+
+| RadarWeather | Gas Prices | Smart Eggtimer | Level | hEARtest | GPS Cockpit |
+| ------- | --- | --- |--- | --- | --- |
+| [<img src="https://github.com/woheller69/weather/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.weather/)| [<img src="https://github.com/woheller69/spritpreise/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.spritpreise/) | [<img src="https://github.com/woheller69/eggtimer/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.eggtimer/) | [<img src="https://github.com/woheller69/level/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.level/) | [<img src="https://github.com/woheller69/audiometry/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.audiometry/) | [<img src="https://github.com/woheller69/audiometry/blob/main/fastlane/metadata/android/en-US/images/icon.png" height="80">](https://f-droid.org/packages/org.woheller69.audiometry/) |
