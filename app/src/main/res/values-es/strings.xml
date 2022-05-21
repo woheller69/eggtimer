@@ -1,13 +1,13 @@
 <resources>
     <string name="start">Iniciar</string>
-    <string name="soft">suave (66°C)</string>
+    <string name="soft">suave</string>
     <string name="stop">Detener</string>
     <string name="cookingtime">Tiempo de cocción restante</string>
     <string name="noAltitude">Altitud GPS no disponible</string>
     <string name="noGPS">Permiso GPS ausente</string>
     <string name="stopAlarm">Detener Alarma</string>
-    <string name="medium">medio (72°C)</string>
-    <string name="hard">duro (85°C)</string>
+    <string name="medium">medio</string>
+    <string name="hard">duro</string>
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">No</string>
     <string name="dialog_Later_button">Quizás luego</string>
@@ -16,4 +16,5 @@
     <string name="instruction_text">Coloque el teléfono en una posición con recepción GPS y espere hasta que se muestre su altitud. \n\nIntroduzca el tamaño del huevo. Los tamaños de los huevos son los definidos en la UE. \n\nIngrese la temperatura del huevo. Seleccione la consistencia o temperatura del núcleo deseada. \n\nPerfore el huevo y póngalo en agua hirviendo. El huevo debe estar completamente cubierto de agua. \n\nPulse el botón Iniciar. \n\nPara más información, visite el proyecto en GitHub.</string>
     <string name="dialog_Cancel_button">Cancelar</string>
     <string name="dialog_Enter_altitude">Altitud m</string>
+    <string name="title_activity_settings">Configuración</string>
 </resources>

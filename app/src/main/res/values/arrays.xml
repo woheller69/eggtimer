@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="consistency">
-        <item>@string/soft</item>
-        <item>@string/medium</item>
-        <item>@string/hard</item>
-        <item>66°C</item>
-        <item>68°C</item>
-        <item>70°C</item>
-        <item>72°C</item>
-        <item>74°C</item>
-        <item>76°C</item>
-        <item>78°C</item>
-        <item>80°C</item>
-        <item>82°C</item>
-        <item>84°C</item>
+    <!-- Temperature Preferences -->
+    <string-array name="temperature_entries">
+        <item>62 °C</item>
+        <item>64 °C</item>
+        <item>66 °C</item>
+        <item>68 °C</item>
+        <item>70 °C</item>
+        <item>72 °C</item>
+        <item>74 °C</item>
+        <item>76 °C</item>
+        <item>78 °C</item>
+        <item>80 °C</item>
+        <item>82 °C</item>
+        <item>84 °C</item>
+        <item>86 °C</item>
+        <item>88 °C</item>
     </string-array>
 
+    <string-array name="temperature_values">
+        <item>62</item>
+        <item>64</item>
+        <item>66</item>
+        <item>68</item>
+        <item>70</item>
+        <item>72</item>
+        <item>74</item>
+        <item>76</item>
+        <item>78</item>
+        <item>80</item>
+        <item>82</item>
+        <item>84</item>
+        <item>86</item>
+        <item>88</item>
+    </string-array>
 </resources>

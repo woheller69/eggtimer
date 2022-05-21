@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">Smart EggTimer</string>
     <string name="start">Start</string>
-    <string name="soft">soft (66°C)</string>
+    <string name="soft">soft</string>
     <string name="stop">Stop</string>
     <string name="cookingtime">Remaining cooking time</string>
     <string name="noAltitude">GPS altitude not available</string>
     <string name="noGPS">GPS permission missing</string>
     <string name="stopAlarm">Stop Alarm</string>
-    <string name="medium">medium (72°C)</string>
-    <string name="hard">hard (85°C)</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">No</string>
     <string name="dialog_Later_button">Maybe later</string>
@@ -17,4 +17,5 @@
     <string name="instruction_text">Place the phone at a position with GPS reception and wait until your altitude is shown.\n\nEnter size of the egg. The egg sizes are as defined in the EU. \n\nEnter temperature of the egg.\n\nSelect desired consistency or core temperature. \n\nPierce the egg and put into boiling water. The egg must be fully covered with water! Let the water boil slightly. \n\nPress the START button. \n\nFor more information please visit the project on GitHub.</string>
     <string name="dialog_Cancel_button">Cancel</string>
     <string name="dialog_Enter_altitude">Altitude m</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

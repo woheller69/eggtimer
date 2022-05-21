@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     // SOFT_EGG = 66; Core temperature
     //MEDIUM_EGG = 72;
-    //HARD_EGG = 85;
+    //HARD_EGG = 86;
     //S_EGG = 48;  //<53g
     //M_EGG = 58;  //53...63g
     //L_EGG = 68;  //63...73g
@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int[] eggWeight = {48,58,68,76,45,50,55,60,65,70,75,80};
     private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
     private static final int[] fridgeTemperatureVal = {4,6,8,10,12,15,20,25,30};
-    private static final int[] coreTemperature = {66,72,85,66,68,70,72,74,76,78,80,82,84};
-
+    private static final int[] coreTemperature = {62,64,66,68,70,72,74,76,78,80,82,84,86,88};
 
     private TextView timerTextView;
     private TextView altitudeTextView;
@@ -81,13 +80,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initViews() {
+        String[] consistency = new String[coreTemperature.length];
         setContentView(R.layout.activity_main);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         altitudeTextView = findViewById(R.id.altitude);
         controllerButton = (Button) findViewById(R.id.controllerButton);
-
-        String[] consistency = getResources().getStringArray(R.array.consistency);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        for (int i = 0; i < coreTemperature.length; i++) {
+            consistency[i]=coreTemperature[i]+"°C";
+            if (Integer.parseInt(sp.getString("soft","66"))==coreTemperature[i]) consistency[i]=consistency[i]+" "+getString(R.string.soft);
+            if (Integer.parseInt(sp.getString("medium","72"))==coreTemperature[i]) consistency[i]=consistency[i]+" "+getString(R.string.medium);
+            if (Integer.parseInt(sp.getString("hard","86"))==coreTemperature[i]) consistency[i]=consistency[i]+" "+getString(R.string.hard);
+        }
+
         Spinner spinnerEggSize = (Spinner) findViewById(R.id.spinnerSize);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, eggSize);
@@ -113,8 +118,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTarget.setAdapter(adapter3);
-        spinnerTarget.setSelection(sp.getInt("consistency",0));
+        spinnerTarget.setSelection(sp.getInt("consistency",2));
         spinnerTarget.setOnItemSelectedListener(this);
+
+        controllerButton.setText(counterIsActive ? getString(R.string.stop) : getString(R.string.start));
+        if (AlarmReceiver.isRingtoneActive()) controllerButton.setText(getString(R.string.stopAlarm));
+
     }
 
     @Override
@@ -126,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume() {
         super.onResume();
         Location.requestLocation(context,altitudeTextView);
+        initViews();
     }
 
     @Override
@@ -311,6 +321,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void showTutorial(View view) {
         Intent intent = new Intent(this, Tutorial.class);
+        startActivity(intent);
+    }
+
+    public void startSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
