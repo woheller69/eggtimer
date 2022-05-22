@@ -73,10 +73,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
         initViews();
-        Location.requestLocation(context,altitudeTextView);
-        if (!counterIsActive && !countUpTimerIsActive) controllerButton.setText(getString(R.string.start));
-        else if (countUpTimerIsActive)controllerButton.setText(getString(R.string.stopAlarm));
-        else controllerButton.setText(getString(R.string.stop));
     }
 
     private void initViews() {
@@ -121,8 +117,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerTarget.setSelection(sp.getInt("consistency",2));
         spinnerTarget.setOnItemSelectedListener(this);
 
-        controllerButton.setText(counterIsActive ? getString(R.string.stop) : getString(R.string.start));
-        if (AlarmReceiver.isRingtoneActive()) controllerButton.setText(getString(R.string.stopAlarm));
+        Location.requestLocation(context,altitudeTextView);
+        if (!counterIsActive && !countUpTimerIsActive) controllerButton.setText(getString(R.string.start));
+        else if (countUpTimerIsActive)controllerButton.setText(getString(R.string.stopAlarm));
+        else controllerButton.setText(getString(R.string.stop));
 
     }
 
