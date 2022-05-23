@@ -1,0 +1,1 @@
+Define temperatures for (soft/medium/hard)
