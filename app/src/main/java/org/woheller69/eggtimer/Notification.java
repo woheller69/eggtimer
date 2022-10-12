@@ -29,7 +29,13 @@ public class Notification {
         Intent intent = new Intent(context, MainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent pIntent = PendingIntent.getActivity(context,0, intent, 0);
+        PendingIntent pIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pIntent = PendingIntent.getActivity(context,0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pIntent = PendingIntent.getActivity(context,0, intent, 0);
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"EggTimer")
                 .setSmallIcon(R.drawable.egg_timer_transparent)
                 .setContentTitle(context.getString(R.string.cookingtime)).setContentText(timeRemaining).setSilent(true).setContentIntent(pIntent);

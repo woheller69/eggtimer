@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //M_EGG = 58;  //53...63g
     //L_EGG = 68;  //63...73g
     //XL_EGG = 76; //>73g
-    private static final String[] eggSize = {"S (EU)", "M (EU)", "L (EU)", "XL (EU)", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
+    private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
     private static final int[] eggWeight = {48,58,68,76,45,50,55,60,65,70,75,80};
     private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
     private static final int[] fridgeTemperatureVal = {4,6,8,10,12,15,20,25,30};
@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         altitudeTextView = findViewById(R.id.altitude);
         controllerButton = (Button) findViewById(R.id.controllerButton);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        eggWeight[0]=sp.getInt("s_weight",48);
+        eggWeight[1]=sp.getInt("m_weight",58);
+        eggWeight[2]=sp.getInt("l_weight",68);
+        eggWeight[3]=sp.getInt("xl_weight",76);
         for (int i = 0; i < coreTemperature.length; i++) {
             consistency[i]=coreTemperature[i]+"°C";
             if (Integer.parseInt(sp.getString("soft","66"))==coreTemperature[i]) consistency[i]=consistency[i]+" "+getString(R.string.soft);
@@ -277,7 +281,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void setAlarm(long timeInMillis) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
@@ -290,7 +299,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        }
         alarmManager.cancel(pendingIntent);
     }
 
