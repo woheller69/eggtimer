@@ -17,4 +17,7 @@
     <string name="dialog_Cancel_button">Cancelar</string>
     <string name="dialog_Enter_altitude">Altitud m</string>
     <string name="title_activity_settings">Configuración</string>
+    <string name="summary_weight_classes">Definir nombres y pesos (en g)</string>
+    <string name="title_weight_classes">Clases de peso</string>
+    <string name="consistency">Consistencia</string>
 </resources>

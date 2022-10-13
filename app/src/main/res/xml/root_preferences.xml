@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceCategory app:title="@string/title_activity_settings" >
+<PreferenceCategory app:title="@string/consistency" >
         <ListPreference
             app:defaultValue="66"
             app:entries="@array/temperature_entries"
@@ -25,39 +25,72 @@
             app:key="hard"
             app:title="@string/hard"
             app:useSimpleSummaryProvider="true" />
+</PreferenceCategory>
+        <PreferenceCategory
+            app:singleLineTitle="true"
+            app:title="@string/title_weight_classes"
+            android:summary="@string/summary_weight_classes">
 
+        <EditTextPreference
+            android:key="xs_name"
+            android:defaultValue="XS"
+            app:useSimpleSummaryProvider="true"
+            />
+        <SeekBarPreference
+            android:key="xs_weight"
+            android:max="90"
+            android:defaultValue="42"
+            app:showSeekBarValue="true"
+            />
 
+        <EditTextPreference
+            android:key="s_name"
+            android:defaultValue="S (EU)"
+            app:useSimpleSummaryProvider="true"
+            />
         <SeekBarPreference
             android:key="s_weight"
-            android:title="S (g)  EU: 48 g"
             android:max="90"
             android:defaultValue="48"
             app:showSeekBarValue="true"
             />
 
+        <EditTextPreference
+            android:key="m_name"
+            android:defaultValue="M (EU)"
+            app:useSimpleSummaryProvider="true"
+            />
         <SeekBarPreference
             android:key="m_weight"
-            android:title="M (g)  EU: 58 g"
             android:max="90"
             android:defaultValue="58"
             app:showSeekBarValue="true"
             />
 
+        <EditTextPreference
+            android:key="l_name"
+            android:defaultValue="L (EU)"
+            app:useSimpleSummaryProvider="true"
+            />
         <SeekBarPreference
             android:key="l_weight"
-            android:title="L (g)  EU: 68 g"
             android:max="90"
             android:defaultValue="68"
             app:showSeekBarValue="true"
             />
 
+        <EditTextPreference
+            android:key="xl_name"
+            android:defaultValue="XL (EU)"
+            app:useSimpleSummaryProvider="true"
+            />
         <SeekBarPreference
             android:key="xl_weight"
-            android:title="XL (g)  EU: 76 g"
             android:max="90"
             android:defaultValue="76"
             app:showSeekBarValue="true"
             />
+
 </PreferenceCategory>
 
 </PreferenceScreen>

@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //M_EGG = 58;  //53...63g
     //L_EGG = 68;  //63...73g
     //XL_EGG = 76; //>73g
-    private static final String[] eggSize = {"S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
-    private static final int[] eggWeight = {48,58,68,76,45,50,55,60,65,70,75,80};
+    private static final String[] eggSize = {"XS","S", "M", "L", "XL", "45g", "50g", "55g", "60g", "65g", "70g", "75g", "80g"};
+    private static final int[] eggWeight = {42,48,58,68,76,45,50,55,60,65,70,75,80};
     private static final String[] fridgeTemperature = {"4°C","6°C", "8°C", "10°C", "12°C", "15°C", "20°C", "25°C", "30°C"};
     private static final int[] fridgeTemperatureVal = {4,6,8,10,12,15,20,25,30};
     private static final int[] coreTemperature = {62,64,66,68,70,72,74,76,78,80,82,84,86,88};
@@ -82,10 +82,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         altitudeTextView = findViewById(R.id.altitude);
         controllerButton = (Button) findViewById(R.id.controllerButton);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        eggWeight[0]=sp.getInt("s_weight",48);
-        eggWeight[1]=sp.getInt("m_weight",58);
-        eggWeight[2]=sp.getInt("l_weight",68);
-        eggWeight[3]=sp.getInt("xl_weight",76);
+        eggWeight[0]=sp.getInt("xs_weight",42);
+        eggWeight[1]=sp.getInt("s_weight",48);
+        eggWeight[2]=sp.getInt("m_weight",58);
+        eggWeight[3]=sp.getInt("l_weight",68);
+        eggWeight[4]=sp.getInt("xl_weight",76);
+        eggSize[0]=sp.getString("xs_name","XS");
+        eggSize[1]=sp.getString("s_name","S (EU)");
+        eggSize[2]=sp.getString("m_name","M (EU)");
+        eggSize[3]=sp.getString("l_name","L (EU)");
+        eggSize[4]=sp.getString("xl_name","XL (EU)");
+
         for (int i = 0; i < coreTemperature.length; i++) {
             consistency[i]=coreTemperature[i]+"°C";
             if (Integer.parseInt(sp.getString("soft","66"))==coreTemperature[i]) consistency[i]=consistency[i]+" "+getString(R.string.soft);
