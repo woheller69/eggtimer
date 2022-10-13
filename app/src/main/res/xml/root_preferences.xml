@@ -26,8 +26,9 @@
             app:title="@string/hard"
             app:useSimpleSummaryProvider="true" />
 </PreferenceCategory>
-        <PreferenceCategory
-            app:singleLineTitle="true"
+
+<PreferenceCategory
+            app:singleLineTitle="false"
             app:title="@string/title_weight_classes"
             android:summary="@string/summary_weight_classes">
 

@@ -17,7 +17,7 @@
     <string name="dialog_Cancel_button">Iptal</string>
     <string name="dialog_Enter_altitude">Yükseklik m</string>
     <string name="title_activity_settings">Ayarlar</string>
-    <string name="summary_weight_classes">İsimleri ve ağırlıkları tanımlayın (g olarak)</string>
-    <string name="title_weight_classes">Ağırlık sınıfları</string>
+    <string name="summary_weight_classes">İsimleri ve ağırlıkları tanımlayın</string>
+    <string name="title_weight_classes">Ağırlık sınıfları (g cinsinden ortalama değer)</string>
     <string name="consistency">Tutarlılık</string>
 </resources>
