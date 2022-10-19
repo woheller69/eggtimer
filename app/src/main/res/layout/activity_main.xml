@@ -129,22 +129,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="showTutorial"
-        app:srcCompat="@android:drawable/ic_menu_info_details"
+        app:srcCompat="@drawable/ic_info_24px"
  />
 
     <ImageButton
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/settingsButton"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:background="@drawable/round_button"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="startSettings"
-        app:srcCompat="@android:drawable/ic_menu_manage"
+        app:srcCompat="@drawable/ic_settings_24px"
         />
 
 
