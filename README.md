@@ -1,6 +1,7 @@
 # Smart EggTimer
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/EggTimer.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Instructions.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/Settings.png" width="150"/> 
+
 This application provides an egg timer which calculates the boiling time according to the formula derived by Dr. Charles D. H. Williams,
 based on required consistency, altitude, start temperature, and egg weight.
 
