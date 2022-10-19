@@ -13,7 +13,7 @@
     <string name="dialog_Later_button">Forse dopo</string>
     <string name="dialog_StarOnGitHub">Ti piace questa app? Metti una stella su GitHub.</string>
     <string name="instructions">Istruzioni</string>
-    <string name="instruction_text">Posizionare il telefono in una posizione con ricezione GPS e attendere che venga visualizzata la propria altitudine.\n\nInserire la dimensione dell\'uovo. Le dimensioni delle uova sono quelle definite nell\'UE. \n\nInserire la temperatura dell\'uovo.\n\nSelezionare la consistenza o la temperatura interna desiderata. \n\Forare l\'uovo e metterlo in acqua bollente. L\'uovo deve essere completamente coperto d\'acqua! Far bollire leggermente l\'acqua. \n\nPremere il pulsante INIZIA. \n\nPer maggiori informazioni visita il progetto su GitHub.</string>
+    <string name="instruction_text">Posizionare il telefono in una posizione con ricezione GPS e attendere che venga visualizzata la propria altitudine.\n\nInserire la dimensione dell\'uovo. Le dimensioni delle uova preimpostate sono quelle definite nell\'UE. \n\nInserire la temperatura dell\'uovo.\n\nSelezionare la consistenza o la temperatura interna desiderata. \n\Forare l\'uovo e metterlo in acqua bollente. L\'uovo deve essere completamente coperto d\'acqua! Far bollire leggermente l\'acqua. \n\nPremere il pulsante INIZIA. \n\nPer maggiori informazioni visita il progetto su GitHub.</string>
     <string name="dialog_Cancel_button">Annulla</string>
     <string name="dialog_Enter_altitude">Altitudine m</string>
     <string name="title_activity_settings">Impostazioni</string>

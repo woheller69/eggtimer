@@ -14,7 +14,7 @@ The formula is taken from here: http://newton.ex.ac.uk/teaching/CDHW/egg/
 
 Place the phone at a position with GPS reception and wait until your altitude is shown.
 
-Enter size of the egg. The egg sizes are as defined by the EU.
+Enter size of the egg. The preset egg sizes are as defined by the EU. You can change them in settings.
 
 | EU size | S | M | L | XL |
 | ------- | --- | --- |--- | --- |
@@ -31,7 +31,7 @@ Press the START button.
 
 ## Permissions
 
-The app requires only authorization for GPS. This is needed to get the altitude which is used for calculation.
+The app only requires authorization for GPS. This is needed to get the altitude which is used for calculation.
 This information is used only within the app. Nothing is sent via the internet.
 
 ## Used third-party libraries

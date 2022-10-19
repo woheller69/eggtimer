@@ -41,7 +41,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    // SOFT_EGG = 66; Core temperature
+    //SOFT_EGG = 66; Core temperature
     //MEDIUM_EGG = 72;
     //HARD_EGG = 86;
     //S_EGG = 48;  //<53g
