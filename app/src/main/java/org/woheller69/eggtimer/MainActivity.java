@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
-        Location.requestLocation(context,altitudeTextView);
         initViews();
     }
 
@@ -167,8 +166,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         checkLocationPermission();
 
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
-
-        initViews();
 
     }
 
