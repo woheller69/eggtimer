@@ -20,4 +20,6 @@
     <string name="summary_weight_classes">İsimleri ve ağırlıkları tanımlayın</string>
     <string name="title_weight_classes">Ağırlık sınıfları (g cinsinden ortalama değer)</string>
     <string name="consistency">Tutarlılık</string>
+    <string name="GPS">GPS</string>
+    <string name="useGPS">GPS kullan</string>
 </resources>

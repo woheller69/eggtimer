@@ -20,4 +20,6 @@
     <string name="summary_weight_classes">Namen und Gewichte definieren</string>
     <string name="title_weight_classes">Gewichtsklassen (mittlerer Wert in g)</string>
     <string name="consistency">Konsistenz</string>
+    <string name="GPS">GPS</string>
+    <string name="useGPS">GPS benutzen</string>
 </resources>

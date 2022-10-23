@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void checkLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sp.getBoolean("useGPS",true) && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }

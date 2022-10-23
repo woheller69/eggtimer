@@ -32,7 +32,7 @@ public class Location {
     static void requestLocation(Context context, TextView altitudeTextView) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         altitude=sp.getInt("altitude",0);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+        if (sp.getBoolean("useGPS",true) && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
             if (locationListenerGPS==null) locationListenerGPS = new LocationListener() {
@@ -69,7 +69,7 @@ public class Location {
                 altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
             }
         }else {
-            Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
+            if (sp.getBoolean("useGPS",true)) Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
             altitudeTextView.setText(altitude +"\u2009m");
             altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
         }

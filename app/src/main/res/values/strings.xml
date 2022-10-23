@@ -21,4 +21,6 @@
     <string name="summary_weight_classes">Define names and weights</string>
     <string name="title_weight_classes">Weight Classes (mean value in g)</string>
     <string name="consistency">Consistency</string>
+    <string name="GPS">GPS</string>
+    <string name="useGPS">Use GPS</string>
 </resources>
