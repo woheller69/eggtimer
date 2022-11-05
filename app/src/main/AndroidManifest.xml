@@ -16,8 +16,12 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings" />
-        <activity android:name=".Tutorial" />
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.EggTimer"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".Tutorial"
+            android:theme="@style/Theme.EggTimer"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
