@@ -22,4 +22,5 @@
     <string name="consistency">Konsistenz</string>
     <string name="GPS">GPS</string>
     <string name="useGPS">GPS benutzen</string>
+    <string name="error_no_gps">Bitte GPS einschalten</string>
 </resources>

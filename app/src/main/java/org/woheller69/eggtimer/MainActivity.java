@@ -1,6 +1,5 @@
 package org.woheller69.eggtimer;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.app.AlarmManager;
@@ -10,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
@@ -19,7 +17,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -143,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
+        Location.checkLocationProvider(this);
+        Location.checkLocationPermission(this);
         initViews();
     }
 
@@ -163,18 +162,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkLocationPermission();
 
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
 
-    }
-
-    private void checkLocationPermission() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        if (sp.getBoolean("useGPS",true) && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
     }
 
     public void resetTimer() {
