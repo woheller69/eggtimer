@@ -5,12 +5,13 @@
     android:key="reset"
     android:layout="@layout/reset_button"/>
 
-<PreferenceCategory app:title="@string/GPS" >
+<PreferenceCategory app:title="@string/GPS"
+    android:key="catGPS">
         <SwitchPreference
             android:defaultValue="true"
-                android:key="useGPS"
-                android:title="@string/useGPS">
-        </SwitchPreference>
+            android:key="useGPS"
+            android:title="@string/useGPS"/>
+
 </PreferenceCategory>
 
 <PreferenceCategory app:title="@string/consistency" >

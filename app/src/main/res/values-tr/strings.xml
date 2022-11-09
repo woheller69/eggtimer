@@ -23,4 +23,6 @@
     <string name="GPS">GPS</string>
     <string name="useGPS">GPS kullan</string>
     <string name="error_no_gps">Lütfen GPS\'i açın</string>
+    <string name="unit_mbar">mbar</string>
+    <string name="unit_m">m</string>
 </resources>

@@ -24,6 +24,9 @@ public class Location {
         return altitude;
     }
 
+    public static double getBoilingTemp() {
+        return 100 - getAltitude() * 0.003354;
+    }
     static void stopLocation(Context context){
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationListenerGPS!=null) locationManager.removeUpdates(locationListenerGPS);
@@ -62,16 +65,16 @@ public class Location {
             if (locationGPS != null) {
                 altitude = (int) locationGPS.getAltitude();
                 sp.edit().putInt("altitude",altitude).apply();
-                altitudeTextView.setText(altitude +"\u2009m");
+                altitudeTextView.setText(altitude + "\u2009" + context.getString(R.string.unit_m));
                 altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
             }else {
                 Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude),Toast.LENGTH_LONG).show();
-                altitudeTextView.setText(altitude +"\u2009m");
+                altitudeTextView.setText(altitude + "\u2009" + context.getString(R.string.unit_m));
                 altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
             }
         }else {
             if (sp.getBoolean("useGPS",true)) Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude)+"\n"+context.getString(R.string.noGPS),Toast.LENGTH_LONG).show();
-            altitudeTextView.setText(altitude +"\u2009m");
+            altitudeTextView.setText(altitude + "\u2009" + context.getString(R.string.unit_m));
             altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.grey));
         }
     }

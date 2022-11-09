@@ -125,7 +125,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerTarget.setSelection(sp.getInt("consistency",2));
         spinnerTarget.setOnItemSelectedListener(this);
 
-        Location.requestLocation(context,altitudeTextView);
+        if (Barometer.hasSensor(context)) {
+            Barometer.requestPressure(context,altitudeTextView);
+        } else {
+            Location.requestLocation(context,altitudeTextView);
+        }
+
         if (!counterIsActive && !countUpTimerIsActive) controllerButton.setText(getString(R.string.start));
         else if (countUpTimerIsActive)controllerButton.setText(getString(R.string.stopAlarm));
         else controllerButton.setText(getString(R.string.stop));
@@ -140,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
-        Location.checkLocationProvider(this);
-        Location.checkLocationPermission(this);
+        if (!Barometer.hasSensor(context)){
+            Location.checkLocationProvider(this);
+            Location.checkLocationPermission(this);
+        }
         initViews();
     }
 
@@ -149,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onPause() {
         super.onPause();
         Location.stopLocation(context);
+        Barometer.stopPressureSensor(context);
     }
 
     @Override
@@ -214,12 +222,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             counterIsActive = true;
             controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
-            Location.requestLocation(context,altitudeTextView);
 
-            timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(100- org.woheller69.eggtimer.Location.getAltitude() *0.003354-tFridge)/(100- org.woheller69.eggtimer.Location.getAltitude()*0.003354-tTarget)))*60*1000;
+            if (Barometer.hasSensor(context)){
+                timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(Barometer.getBoilingTemp() - tFridge)/(Barometer.getBoilingTemp() - tTarget)))*60*1000;
 
-            setAlarm((long) timeInMillis);
+            } else{
+                Location.requestLocation(context,altitudeTextView);
+                timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(Location.getBoilingTemp() - tFridge)/(Location.getBoilingTemp() - tTarget)))*60*1000;
+            }
 
+             setAlarm((long) timeInMillis);
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -337,25 +349,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void setAltitude(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(context.getString(R.string.dialog_Enter_altitude));
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setRawInputType(Configuration.KEYBOARD_12KEY);
-        alert.setView(input);
-        alert.setPositiveButton(context.getString(R.string.dialog_OK_button), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                int altitude= Integer.parseInt(input.getText().toString());
-                Location.setAltitude(context,altitude);
-                altitudeTextView.setText(altitude +"\u2009m");
-            }
-        });
-        alert.setNegativeButton(context.getString(R.string.dialog_Cancel_button), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //Put actions for CANCEL button here, or leave in blank
-            }
-        });
-        alert.show();
+        if (!Barometer.hasSensor(context)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(context.getString(R.string.dialog_Enter_altitude));
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            input.setRawInputType(Configuration.KEYBOARD_12KEY);
+            alert.setView(input);
+            alert.setPositiveButton(context.getString(R.string.dialog_OK_button), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    int altitude = Integer.parseInt(input.getText().toString());
+                    Location.setAltitude(context, altitude);
+                    altitudeTextView.setText(altitude + "\u2009m");
+                }
+            });
+            alert.setNegativeButton(context.getString(R.string.dialog_Cancel_button), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //Put actions for CANCEL button here, or leave in blank
+                }
+            });
+            alert.show();
+        }
     }
 }
 

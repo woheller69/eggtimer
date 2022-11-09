@@ -11,8 +11,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -43,6 +45,12 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             Preference reset = getPreferenceManager().findPreference("reset");
+            if (Barometer.hasSensor(requireContext())){
+                PreferenceScreen preferenceScreen = getPreferenceScreen();
+                PreferenceCategory catGPS = (PreferenceCategory) findPreference("catGPS");
+                preferenceScreen.removePreference(catGPS);
+            }
+
             if (reset != null) reset.setOnPreferenceClickListener(preference -> {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
