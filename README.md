@@ -13,7 +13,7 @@ The formula is taken from here: http://newton.ex.ac.uk/teaching/CDHW/egg/
 
 ## Instructions
 
-Place the phone at a position with GPS reception and wait until your altitude is shown.
+If your phone does not have a built-in pressure sensor, place it at a position with GPS reception and wait until your altitude is shown.
 
 Enter size of the egg. The preset egg sizes are as defined by the EU. You can change them in settings.
 

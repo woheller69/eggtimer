@@ -5,7 +5,7 @@ Die Kochdauer wird berechnet abhängig von
 - der gewünschten Konsistenz
 - der Größe des Eies
 - der Starttemperatur
-- der geographischen Höhe
+- dem Luftdruck oder der geographischen Höhe
 
 Minimale Berechtigungen:
 - Smart EggTimer erfordert nur eine Autorisierung für GPS. Dies wird benötigt, um die Höhe zu erhalten, die für die Berechnung verwendet wird.

@@ -5,7 +5,7 @@ The cooking time is calculated depending on
 - the desired consistency
 - the size of the egg
 - the start temperature
-- the geographic altitude
+- the air pressure or the geographic altitude
 
 Minimum permissions:
 - Smart EggTimer only requires authorization for GPS. This is needed to get the altitude which is used for calculation.

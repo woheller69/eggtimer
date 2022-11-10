@@ -5,7 +5,7 @@ Pişirme süresi, aşağıdakilere bağlı olarak hesaplanır:
 - istenen kıvam
 - yumurtanın boyutu
 - başlangıç sıcaklığı
-- coğrafi rakım
+- hava basıncı veya coğrafi yükseklik
 
 Asgari izinler:
 - Smart EggTimer, yalnızca GPS için yetkilendirme gerektirir. Bu, hesaplama için kullanılan rakımı elde etmek için gereklidir.
