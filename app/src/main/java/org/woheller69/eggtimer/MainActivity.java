@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onResume();
         if (!Barometer.hasSensor(context)){
             Location.checkLocationProvider(this);
-            Location.checkLocationPermission(this);
         }
         initViews();
     }
@@ -170,7 +169,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (!Barometer.hasSensor(context)){
+            Location.checkLocationPermission(this);
+        }
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
 
     }
