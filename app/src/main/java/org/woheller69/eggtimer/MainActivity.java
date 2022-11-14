@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -220,66 +221,75 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             GithubStar.starDialog(context);
         } else if (!counterIsActive) {
             AlarmReceiver.stopAlarmSound(); //just to be sure: stop old Mediaplayer
-            counterIsActive = true;
-            controllerButton.setText(getString(R.string.stop));
             double timeInMillis;
-
+            double tBoil;
             if (Barometer.hasSensor(context)){
-                timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(Barometer.getBoilingTemp() - tFridge)/(Barometer.getBoilingTemp() - tTarget)))*60*1000;
-
+                tBoil = Barometer.getBoilingTemp();
             } else{
                 Location.requestLocation(context,altitudeTextView);
-                timeInMillis = (0.451*Math.pow(weight,2.0f/3.0f)*Math.log(0.76*(Location.getBoilingTemp() - tFridge)/(Location.getBoilingTemp() - tTarget)))*60*1000;
+                tBoil = Location.getBoilingTemp();
             }
 
-             setAlarm((long) timeInMillis);
+            if ((tBoil - tTarget) < 1) {   //check if boiling temperature is too low (should be at least 1K higher than target temperature)
+                mediaPlayer=MediaPlayer.create(context,R.raw.buzzer);
+                Toast.makeText(this,getString(R.string.error_boiling_temperature), Toast.LENGTH_LONG).show();
+                mediaPlayer.setVolume(1, 1);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    mp.reset();
+                    mp.release();
+                });
+            } else {
+                counterIsActive = true;
+                controllerButton.setText(getString(R.string.stop));
+                timeInMillis = (0.451 * Math.pow(weight, 2.0f / 3.0f) * Math.log(0.76 * (tBoil - tFridge) / (tBoil - tTarget))) * 60 * 1000;
+                setAlarm((long) timeInMillis);
 
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            countDownTimer = new CountDownTimer((long) timeInMillis, 1000) {
+                countDownTimer = new CountDownTimer((long) timeInMillis, 1000) {
 
-                @Override
-                public void onTick(long l) {
-                    updateTimer((int) l / 1000);
+                    @Override
+                    public void onTick(long l) {
+                        updateTimer((int) l / 1000);
 
-                    mediaPlayer=MediaPlayer.create(context,R.raw.click);
-                    if (l>11000) {
-                        mediaPlayer.setVolume(0.05f, 0.05f);
-                    } else {
-                        mediaPlayer.setVolume(1, 1);
-                    }
-                    mediaPlayer.start();
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                        if (l > 11000) {
+                            mediaPlayer.setVolume(0.05f, 0.05f);
+                        } else {
+                            mediaPlayer.setVolume(1, 1);
+                        }
+                        mediaPlayer.start();
+                        mediaPlayer.setOnCompletionListener(mp -> {
                             mp.reset();
                             mp.release();
-                        }
-                    });
-                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //reactivate SCREEN_ON while timer is running, when e.g. switching back from other app
-                }
+                        });
+                        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //reactivate SCREEN_ON while timer is running, when e.g. switching back from other app
+                    }
 
-                @Override
-                public void onFinish() {
-                    Notification.showNotification(context,"00:00");
-                    counterIsActive = false;
-                    countUpTimerIsActive = true;
-                    AlarmReceiver.playAlarmSound(context);
-                    controllerButton.setText(getString(R.string.stopAlarm));
+                    @Override
+                    public void onFinish() {
+                        Notification.showNotification(context, "00:00");
+                        counterIsActive = false;
+                        countUpTimerIsActive = true;
+                        AlarmReceiver.playAlarmSound(context);
+                        controllerButton.setText(getString(R.string.stopAlarm));
 
-                    TimerTask timerTask;
-                    countUpTimer = new Timer();
-                    timerTask = new TimerTask() {
-                        int num=0;
-                        @Override
-                        public void run() {
-                            num--;
-                            updateTimer(num);
-                        }
-                    };
-                    countUpTimer.schedule(timerTask,0,1000);
-                }
-            }.start();
+                        TimerTask timerTask;
+                        countUpTimer = new Timer();
+                        timerTask = new TimerTask() {
+                            int num = 0;
+
+                            @Override
+                            public void run() {
+                                num--;
+                                updateTimer(num);
+                            }
+                        };
+                        countUpTimer.schedule(timerTask, 0, 1000);
+                    }
+                }.start();
+            }
         } else {
             resetTimer();
             Notification.cancelNotification(context);

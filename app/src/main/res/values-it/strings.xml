@@ -25,4 +25,5 @@
     <string name="error_no_gps">Si prega di attivare il GPS</string>
     <string name="unit_mbar">mbar</string>
     <string name="unit_m">m</string>
+    <string name="error_boiling_temperature">Temperatura di ebollizione troppo bassa</string>
 </resources>

@@ -25,4 +25,5 @@
     <string name="error_no_gps">Lütfen GPS\'i açın</string>
     <string name="unit_mbar">mbar</string>
     <string name="unit_m">m</string>
+    <string name="error_boiling_temperature">Kaynama sıcaklığı çok düşük</string>
 </resources>
