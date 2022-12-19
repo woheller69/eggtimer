@@ -1,0 +1,2 @@
+Use pressure sensor instead of GPS, if available
+Bugfixes

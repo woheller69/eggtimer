@@ -1,0 +1,2 @@
+Verwendung des Drucksensors statt GPS, falls verfügbar
+Fehlerbehebung
