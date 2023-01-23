@@ -3,12 +3,15 @@ package org.woheller69.eggtimer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
+
+import androidx.preference.PreferenceManager;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -21,11 +24,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static void playAlarmSound(Context context){
         try {
-            Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);  //play through alarm channel
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            Uri notification;
+            if (sp.getBoolean("internalAlarm",false)){
+                notification = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.rooster);
+            } else {
+                notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+            }
+
             player.reset();
             player.setLooping(true);
             player.setDataSource(context,notification);
-            player.setAudioStreamType(AudioManager.STREAM_ALARM);
+            player.setAudioStreamType(AudioManager.STREAM_ALARM);   //play through alarm channel
             /* setAudioStreamType is deprecated. Can be replaced as below but requires MinSDK 21
             player.setAudioAttributes(
                     new AudioAttributes

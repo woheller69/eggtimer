@@ -26,4 +26,6 @@
     <string name="unit_mbar">mbar</string>
     <string name="unit_m">m</string>
     <string name="error_boiling_temperature">Kaynama sıcaklığı çok düşük</string>
+    <string name="alarm">Alarm sesi</string>
+    <string name="useInternalAlarm">Içermek</string>
 </resources>
