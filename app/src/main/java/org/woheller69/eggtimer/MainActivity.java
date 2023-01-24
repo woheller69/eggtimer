@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
+import android.provider.Settings;
 import android.text.InputType;
 import android.view.View;
 
@@ -304,6 +305,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
         } else {
             pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        }
+
+        //SCHEDULE_EXACT_ALARM: on Android 12 this permission is automatically granted by the Android system but on Android 13 we need to check if the user has granted this permission.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent2 = new Intent();
+                intent2.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent2);
+            }
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
