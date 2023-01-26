@@ -11,7 +11,7 @@
     <string name="dialog_OK_button">Tamam</string>
     <string name="dialog_NO_button">Hayır</string>
     <string name="dialog_Later_button">Belki daha sonra</string>
-    <string name="dialog_StarOnGitHub">Bu uygulamayı beğendiniz mi? Lütfen GitHub\'da yıldız verin.</string>
+    <string name="dialog_StarOnGitHub">Bu uygulamayı beğendin mi? Lütfen GitHub\'da derecelendirin veya geliştiriciye PayPal aracılığıyla bir kahve gönderin.</string>
     <string name="instructions">Talimatlar</string>
     <string name="instruction_text">Telefonunuzda yerleşik bir basınç sensörü yoksa, onu GPS alımı olan bir yere koyun ve irtifanız görüntülenene kadar bekleyin.\n\nYumurtanın boyutunu girin. Önceden ayarlanmış yumurta boyutları AB\'de tanımlandığı gibidir. \n\nYumurtanın sıcaklığını girin.\n\nİstenen kıvamı veya çekirdek sıcaklığını seçin. \n\nYumurtayı delin ve kaynar suya koyun. Yumurta tamamen su ile kaplanmalıdır! Suyun hafifçe kaynamasına izin verin. \n\nBAŞLAT düğmesine basın. \n\nDaha fazla bilgi için lütfen GitHub\'daki proje sayfasını ziyaret edin.</string>
     <string name="dialog_Cancel_button">Iptal</string>
