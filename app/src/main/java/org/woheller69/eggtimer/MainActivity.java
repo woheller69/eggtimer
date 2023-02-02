@@ -1,31 +1,22 @@
 package org.woheller69.eggtimer;
 
 import android.annotation.SuppressLint;
-
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
-import android.provider.Settings;
-import android.text.InputType;
-import android.view.View;
-
 import android.os.CountDownTimer;
-
+import android.text.InputType;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +25,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -174,8 +172,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (!Barometer.hasSensor(context)){
             Location.checkLocationPermission(this);
         }
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
 
+        checkNotificationsPermission();
     }
 
     public void resetTimer() {
@@ -307,15 +305,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
         }
 
-        //SCHEDULE_EXACT_ALARM: on Android 12 this permission is automatically granted by the Android system but on Android 13 we need to check if the user has granted this permission.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            if (!alarmManager.canScheduleExactAlarms()) {
-                Intent intent2 = new Intent();
-                intent2.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                startActivity(intent2);
-            }
-        }
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeInMillis, pendingIntent);
         } else {
@@ -392,7 +381,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             alert.show();
         }
     }
+
+    private void checkNotificationsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (Notification.isPermissionGranted(this)) {
+                initNotifications();
+            } else {
+                Notification.requestPermission(this);
+            }
+        } else {
+            initNotifications();
+        }
+    }
+
+    private void initNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.initNotification(context);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Notification.PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            initNotifications();
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
-
-
-
