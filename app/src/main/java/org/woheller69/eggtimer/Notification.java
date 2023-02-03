@@ -17,7 +17,6 @@ import androidx.core.app.NotificationCompat;
 
 public class Notification {
     public static final int PERMISSION_REQUEST_CODE = 2;
-    private static ActivityResultLauncher<String> notificationPermissionLauncher;
 
     static void initNotification(Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
