@@ -1,14 +1,12 @@
 package org.woheller69.eggtimer;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -16,7 +14,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,8 +24,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -149,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (!Barometer.hasSensor(context)){
             Location.checkLocationProvider(this);
         }
+        initNotifications();
         initViews();
     }
 
@@ -393,27 +389,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void checkNotificationsPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (Notification.isPermissionGranted(this)) {
-                initNotifications();
-            } else {
-                Notification.requestPermission(this);
-            }
-        } else {
-            initNotifications();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !Notification.isPermissionGranted(this)) {
+            Notification.requestPermission(this);
         }
     }
 
     private void initNotifications() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.initNotification(context);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Notification.PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            initNotifications();
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && Notification.isPermissionGranted(this))) {
+            Notification.initNotification(context);
         }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
