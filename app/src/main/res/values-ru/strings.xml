@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">Старт</string>
+    <string name="soft">Мягко</string>
+    <string name="stop">Стоп</string>
+    <string name="cookingtime">Оставшееся время готовки</string>
+    <string name="noAltitude">GPS высота не доступна</string>
+    <string name="noGPS">GPS разрешение не предоставлено</string>
+    <string name="stopAlarm">Остоновить звон</string>
+    <string name="medium">средне</string>
+    <string name="hard">жестко</string>
+    <string name="dialog_OK_button">ОК</string>
+    <string name="dialog_NO_button">Нет</string>
+    <string name="dialog_Later_button">Может потом</string>
+    <string name="dialog_StarOnGitHub">Вам нравиться это приложение? Прошу поставьте звезду в GitHub или купите разработчику кофе с помощью PayPal</string>
+    <string name="instructions">Инструкции</string>
+    <string name="instruction_text">Если ваш телефон не имеет встроенный сенсор давления, положите его в место где есть GPS сигнал, и подождите пока не отобразится высота.\n\nВведите размер яйца. Стандартные размеры яиц описаны в ЕС. \n\nВведите температуру яйца.\n\nВыберите предпочитаемую консистенцию или внутреннюю температуру. \n\nПроткните яйцо и положите в кипящую воду. Яйцо должно быть полностью покрыто водой! Дайте воде немного прикипеть. \n\nНажмите кнопку Старт. \n\nДля большей информаций прошу посетите страницу в GitHub.</string>
+    <string name="dialog_Cancel_button">Отмена</string>
+    <string name="dialog_Enter_altitude">Высота m</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="summary_weight_classes">Определите имена и весы</string>
+    <string name="title_weight_classes">Классы весов (медианное значение в g)</string>
+    <string name="consistency">Консистенция</string>
+    <string name="GPS">GPS</string>
+    <string name="useGPS">Изпользовать GPS</string>
+    <string name="error_no_gps">Прошу включите GPS</string>
+    <string name="unit_mbar">mbar</string>
+    <string name="unit_m">m</string>
+    <string name="error_boiling_temperature">Температура кипения слишком низка</string>
+    <string name="alarm">Звук звона</string>
+    <string name="useInternalAlarm">Внедрено</string>
+</resources>
