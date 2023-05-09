@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "org.woheller69.eggtimer"
         minSdkVersion 19
-        targetSdkVersion 31
-        versionCode 26
-        versionName "2.6"
+        targetSdkVersion 33
+        versionCode 27
+        versionName "2.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
