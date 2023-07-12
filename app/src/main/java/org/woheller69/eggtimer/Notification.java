@@ -42,7 +42,7 @@ public class Notification {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"EggTimer")
-                .setSmallIcon(R.drawable.egg_timer_transparent)
+                .setSmallIcon(R.drawable.ic_egg)
                 .setContentTitle(context.getString(R.string.cookingtime)).setContentText(timeRemaining).setSilent(true).setContentIntent(pIntent);
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1,builder.build());

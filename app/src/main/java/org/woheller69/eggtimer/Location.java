@@ -66,7 +66,7 @@ public class Location {
                 altitude = (int) locationGPS.getAltitude();
                 sp.edit().putInt("altitude",altitude).apply();
                 altitudeTextView.setText(altitude + "\u2009" + context.getString(R.string.unit_m));
-                altitudeTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
+                altitudeTextView.setTextColor(MainActivity.getThemeColor(context,R.attr.colorOnPrimaryContainer));
             }else {
                 Toast.makeText(context.getApplicationContext(),context.getString(R.string.noAltitude),Toast.LENGTH_LONG).show();
                 altitudeTextView.setText(altitude + "\u2009" + context.getString(R.string.unit_m));

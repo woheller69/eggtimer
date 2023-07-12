@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        app:srcCompat="@drawable/egg" />
+        app:srcCompat="@drawable/ic_egg" />
 
     <TextView
         android:id="@+id/timerTextView"
@@ -32,7 +32,7 @@
         android:layout_marginBottom="-3dp"
         android:text="--:--"
         android:textSize="60dp"
-        android:textColor="@color/teal_700"
+        android:textColor="?attr/colorOnPrimaryContainer"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

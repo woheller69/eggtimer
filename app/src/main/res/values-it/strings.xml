@@ -28,4 +28,7 @@
     <string name="error_boiling_temperature">Temperatura di ebollizione troppo bassa</string>
     <string name="alarm">Suono di allarme</string>
     <string name="useInternalAlarm">Integrato</string>
+    <string name="colors">Colori</string>
+    <string name="use_dynamic_colors">Usa colori dinamici</string>
+    <string name="restart">Riavviare l\'app</string>
 </resources>

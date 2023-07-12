@@ -29,4 +29,7 @@
     <string name="error_boiling_temperature">Boiling temperature too low</string>
     <string name="alarm">Alarm sound</string>
     <string name="useInternalAlarm">Built-in</string>
+    <string name="colors">Colors</string>
+    <string name="use_dynamic_colors">Use dynamic colors</string>
+    <string name="restart">Restart app</string>
 </resources>

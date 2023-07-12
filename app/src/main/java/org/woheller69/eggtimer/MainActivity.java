@@ -11,17 +11,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import android.provider.Settings;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.View;
 
 import android.os.CountDownTimer;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onDestroy(){
-        cancelAlarm();
+        AlarmReceiver.cancelAlarm(this);
         if (countDownTimer!=null) countDownTimer.cancel();
         Notification.cancelNotification(this);
         super.onDestroy();
@@ -183,9 +184,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         timerTextView.setText("--:--");
         if (countUpTimer!=null) countUpTimer.cancel();
         countDownTimer.cancel();
-        cancelAlarm();
+        AlarmReceiver.cancelAlarm(this);
         controllerButton.setText(getString(R.string.start));
-        timerTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
+        timerTextView.setTextColor(getThemeColor(context,R.attr.colorOnPrimaryContainer));
         counterIsActive = false;
         countUpTimerIsActive = false;
     }
@@ -203,10 +204,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // This code will always run on the UI thread, therefore is safe to modify UI elements.
                 if (secondsLeft>=0){
                     timerTextView.setText(timeRemaining);
-                    timerTextView.setTextColor(ContextCompat.getColor(context,R.color.teal_700));
+                    timerTextView.setTextColor(getThemeColor(context,R.attr.colorOnPrimaryContainer));
                 }else{
                     timerTextView.setText("-"+timeRemaining);
-                    timerTextView.setTextColor(ContextCompat.getColor(context,R.color.red));
+                    timerTextView.setTextColor(getThemeColor(context,R.attr.colorError));
                 }
 
             }
@@ -325,18 +326,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private void cancelAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
-        } else {
-            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
-        }
-        alarmManager.cancel(pendingIntent);
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -392,6 +381,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             });
             alert.show();
         }
+    }
+    public static int getThemeColor(Context context, int colorResId) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray typedArray = context.obtainStyledAttributes(typedValue.data, new int[] {colorResId});
+        int color = typedArray.getColor(0, 0);
+        typedArray.recycle();
+        return color;
     }
 }
 

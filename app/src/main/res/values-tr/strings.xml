@@ -28,4 +28,7 @@
     <string name="error_boiling_temperature">Kaynama sıcaklığı çok düşük</string>
     <string name="alarm">Alarm sesi</string>
     <string name="useInternalAlarm">Içermek</string>
+    <string name="colors">Renkler</string>
+    <string name="use_dynamic_colors">Dinamik renkler kullanın</string>
+    <string name="restart">Uygulamayı yeniden başlat</string>
 </resources>

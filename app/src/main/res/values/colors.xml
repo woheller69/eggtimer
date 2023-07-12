@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="grey">#999999</color>
+    <color name="egg">#DEAA87</color>
 </resources>

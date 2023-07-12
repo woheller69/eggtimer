@@ -1,14 +1,16 @@
 package org.woheller69.eggtimer;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.CountDownTimer;
 
 import androidx.preference.PreferenceManager;
@@ -65,5 +67,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static boolean isRingtoneActive(){
         return player.isPlaying();
+    }
+
+    public static void cancelAlarm(Context context){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+        }
+        alarmManager.cancel(pendingIntent);
     }
 }

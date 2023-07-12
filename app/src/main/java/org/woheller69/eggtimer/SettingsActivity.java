@@ -5,9 +5,11 @@ import static java.lang.Boolean.TRUE;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.Preference;
@@ -45,10 +47,14 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             Preference reset = getPreferenceManager().findPreference("reset");
+            PreferenceScreen preferenceScreen = getPreferenceScreen();
             if (Barometer.hasSensor(requireContext())){
-                PreferenceScreen preferenceScreen = getPreferenceScreen();
                 PreferenceCategory catGPS = (PreferenceCategory) findPreference("catGPS");
                 preferenceScreen.removePreference(catGPS);
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                PreferenceCategory catColors = (PreferenceCategory) findPreference("catColors");
+                preferenceScreen.removePreference(catColors);
             }
 
             if (reset != null) reset.setOnPreferenceClickListener(preference -> {
@@ -83,6 +89,15 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                             new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,}, 1);
                 }
             }
+        } else if (s.equals("useDynamicColors")) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.restart))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        AlarmReceiver.cancelAlarm(this);
+                        Notification.cancelNotification(this);
+                        Runtime.getRuntime().exit(0);
+                    })
+                    .show();
         }
     }
 

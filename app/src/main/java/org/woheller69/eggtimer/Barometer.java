@@ -29,7 +29,6 @@ public class Barometer {
         }
 
         static void requestPressure(Context context, TextView altitudeTextView) {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                 sensorManager = (SensorManager) context.getSystemService(Service.SENSOR_SERVICE);
                 Sensor barometer = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
                 if (sensorListener == null) sensorListener = new SensorEventListener() {
@@ -39,6 +38,7 @@ public class Barometer {
                             float[] values = event.values;
                             boilingTemp = calcBoilingTemp(values[0]);
                             altitudeTextView.setText((int)values[0]+ "\u2009" + context.getString(R.string.unit_mbar));
+                            altitudeTextView.setTextColor(MainActivity.getThemeColor(context,R.attr.colorOnPrimaryContainer));
                         }
                     }
 

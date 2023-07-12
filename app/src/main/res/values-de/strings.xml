@@ -28,4 +28,7 @@
     <string name="error_boiling_temperature">Siedetemperatur zu niedrig</string>
     <string name="alarm">Alarmton</string>
     <string name="useInternalAlarm">Integriert</string>
+    <string name="colors">Farben</string>
+    <string name="use_dynamic_colors">Dynamische Farben verwenden</string>
+    <string name="restart">App neustarten</string>
 </resources>
