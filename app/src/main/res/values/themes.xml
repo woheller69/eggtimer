@@ -2,15 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.EggTimer" parent="Theme.Material3.DayNight">
         <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/egg</item>
         <item name="colorOnPrimaryContainer">@color/purple_700</item>
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorError">@color/red</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="Theme.EggTimer.NoActionBar">
