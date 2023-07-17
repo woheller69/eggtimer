@@ -18,6 +18,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.preference.PreferenceManager;
 
 import android.provider.Settings;
@@ -35,7 +36,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.material.color.DynamicColors;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -172,6 +173,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.installSplashScreen(this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sp.getBoolean("useDynamicColors", false)) {
+            DynamicColors.applyToActivityIfAvailable(this);
+            DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
+        }
+        getWindow().setStatusBarColor(getThemeColor(this,R.attr.colorPrimaryDark));
         super.onCreate(savedInstanceState);
         if (!Barometer.hasSensor(context)){
             Location.checkLocationPermission(this);

@@ -10,8 +10,14 @@
         <item name="colorError">@color/red</item>
     </style>
 
-    <style name="Theme.EggTimer.NoActionBar">
+    <style name="Theme.EggTimer.NoActionBar" parent="Theme.EggTimer">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppStarting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.EggTimer.NoActionBar</item>
+    </style>
+
 </resources>

@@ -5,7 +5,6 @@ import static java.lang.Boolean.TRUE;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -17,7 +16,7 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
-
+import com.google.android.material.color.DynamicColors;
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
@@ -52,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 PreferenceCategory catGPS = (PreferenceCategory) findPreference("catGPS");
                 preferenceScreen.removePreference(catGPS);
             }
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            if (!DynamicColors.isDynamicColorAvailable()) {
                 PreferenceCategory catColors = (PreferenceCategory) findPreference("catColors");
                 preferenceScreen.removePreference(catColors);
             }

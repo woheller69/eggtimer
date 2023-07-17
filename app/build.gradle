@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "org.woheller69.eggtimer"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode 27
         versionName "2.7"
@@ -39,5 +39,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.preference:preference:1.2.0'
-
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 }
