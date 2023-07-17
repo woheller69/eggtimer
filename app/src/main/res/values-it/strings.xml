@@ -30,5 +30,5 @@
     <string name="useInternalAlarm">Integrato</string>
     <string name="colors">Colori</string>
     <string name="use_dynamic_colors">Usa colori dinamici</string>
-    <string name="restart">Riavviare l\'app</string>
+    <string name="restart">L\'app deve essere riavviata</string>
 </resources>

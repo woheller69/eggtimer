@@ -31,5 +31,5 @@
     <string name="useInternalAlarm">Built-in</string>
     <string name="colors">Colors</string>
     <string name="use_dynamic_colors">Use dynamic colors</string>
-    <string name="restart">Restart app</string>
+    <string name="restart">App must be restarted</string>
 </resources>
