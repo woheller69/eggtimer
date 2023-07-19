@@ -1,0 +1,4 @@
+Increase max egg weight to 100g
+Splash screen
+Dynamic colors (Android 12+)
+Monochrome icon support (Android 13+)

@@ -1,0 +1,4 @@
+Maximales Eiergewicht auf 100g erhöht
+Splash screen
+Dynamische Farben (Android 12+)
+Unterstützung für monochromes Icon (Android 13+)
