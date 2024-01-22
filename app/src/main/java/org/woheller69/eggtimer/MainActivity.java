@@ -1,5 +1,6 @@
 package org.woheller69.eggtimer;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.app.AlarmManager;
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.media.MediaPlayer;
@@ -18,6 +20,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.preference.PreferenceManager;
 
@@ -37,6 +40,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.color.DynamicColors;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -181,11 +186,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         getWindow().setStatusBarColor(getThemeColor(this,R.attr.colorPrimaryDark));
         super.onCreate(savedInstanceState);
-        if (!Barometer.hasSensor(context)){
-            Location.checkLocationPermission(this);
-        }
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) Notification.checkNotificationPermission(this);
+        checkAndRequestPerms();
+    }
 
+    private void checkAndRequestPerms() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        List<String> perms = new ArrayList<>();
+        if (!Barometer.hasSensor(context)) {
+            if (sp.getBoolean("useGPS", true) && (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                perms.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                perms.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+        }
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)){
+            perms.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
+        if (!perms.isEmpty()) {
+            ActivityCompat.requestPermissions(this, perms.toArray(new String[] {}), 0);
+        }
     }
 
     public void resetTimer() {
@@ -317,8 +335,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
         }
 
-        //SCHEDULE_EXACT_ALARM: on Android 12 this permission is automatically granted by the Android system but on Android 13 we need to check if the user has granted this permission.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+        //SCHEDULE_EXACT_ALARM: on Android 12 this permission should usually be automatically granted by the Android system
+        if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.S) {
             if (!alarmManager.canScheduleExactAlarms()) {
                 Intent intent2 = new Intent();
                 intent2.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);

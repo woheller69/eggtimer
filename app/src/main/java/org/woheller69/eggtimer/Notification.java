@@ -1,17 +1,12 @@
 package org.woheller69.eggtimer;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 public class Notification {
@@ -48,11 +43,4 @@ public class Notification {
         mNotificationManager.notify(1,builder.build());
     }
 
-    @RequiresApi(api = 33)
-    public static void checkNotificationPermission(Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
-        }
-    }
 }

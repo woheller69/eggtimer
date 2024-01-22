@@ -1,7 +1,6 @@
 package org.woheller69.eggtimer;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -93,14 +92,6 @@ public class Location {
                 Toast.makeText(context, context.getString(R.string.error_no_gps), Toast.LENGTH_SHORT).show();
             }
 
-        }
-    }
-
-    public static void checkLocationPermission(Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        if (sp.getBoolean("useGPS",true) && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
 
