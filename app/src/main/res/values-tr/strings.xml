@@ -11,14 +11,14 @@
     <string name="dialog_OK_button">Tamam</string>
     <string name="dialog_NO_button">Hayır</string>
     <string name="dialog_Later_button">Belki daha sonra</string>
-    <string name="dialog_StarOnGitHub">Bu uygulamayı beğendin mi? Lütfen GitHub\'da derecelendirin veya geliştiriciye PayPal aracılığıyla bir kahve gönderin.</string>
+    <string name="dialog_StarOnGitHub">Bu uygulamayı beğendiniz mi? Lütfen GitHub\'da yıldız verin veya geliştiriciye PayPal aracılığıyla bir kahve ısmarlayın.</string>
     <string name="instructions">Talimatlar</string>
     <string name="instruction_text">Telefonunuzda yerleşik bir basınç sensörü yoksa, onu GPS alımı olan bir yere koyun ve irtifanız görüntülenene kadar bekleyin.\n\nYumurtanın boyutunu girin. Önceden ayarlanmış yumurta boyutları AB\'de tanımlandığı gibidir. \n\nYumurtanın sıcaklığını girin.\n\nİstenen kıvamı veya çekirdek sıcaklığını seçin. \n\nYumurtayı delin ve kaynar suya koyun. Yumurta tamamen su ile kaplanmalıdır! Suyun hafifçe kaynamasına izin verin. \n\nBAŞLAT düğmesine basın. \n\nDaha fazla bilgi için lütfen GitHub\'daki proje sayfasını ziyaret edin.</string>
-    <string name="dialog_Cancel_button">Iptal</string>
-    <string name="dialog_Enter_altitude">Yükseklik m</string>
+    <string name="dialog_Cancel_button">İptal</string>
+    <string name="dialog_Enter_altitude">Rakım m</string>
     <string name="title_activity_settings">Ayarlar</string>
-    <string name="summary_weight_classes">İsimleri ve ağırlıkları tanımlayın</string>
-    <string name="title_weight_classes">Ağırlık sınıfları (g cinsinden ortalama değer)</string>
+    <string name="summary_weight_classes">Adları ve ağırlıkları tanımlayın</string>
+    <string name="title_weight_classes">Ağırlık Sınıfları (g cinsinden ortalama değer)</string>
     <string name="consistency">Tutarlılık</string>
     <string name="GPS">GPS</string>
     <string name="useGPS">GPS kullan</string>
@@ -27,8 +27,8 @@
     <string name="unit_m">m</string>
     <string name="error_boiling_temperature">Kaynama sıcaklığı çok düşük</string>
     <string name="alarm">Alarm sesi</string>
-    <string name="useInternalAlarm">Içermek</string>
+    <string name="useInternalAlarm">Yerleşik</string>
     <string name="colors">Renkler</string>
-    <string name="use_dynamic_colors">Dinamik renkler kullanın</string>
+    <string name="use_dynamic_colors">Değişken renkler kullan</string>
     <string name="restart">Uygulama yeniden başlatılmalıdır</string>
 </resources>
