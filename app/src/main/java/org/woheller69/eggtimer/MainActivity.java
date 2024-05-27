@@ -336,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         //SCHEDULE_EXACT_ALARM: on Android 12 this permission should usually be automatically granted by the Android system
+        //For Android 13+ we use USE_EXACT_ALARM
         if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.S) {
             if (!alarmManager.canScheduleExactAlarms()) {
                 Intent intent2 = new Intent();
