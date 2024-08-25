@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (!Barometer.hasSensor(context)){
             Location.checkLocationProvider(this);
         }
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) Notification.initNotification(context);
+
         initViews();
     }
 
@@ -270,6 +270,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 });
             } else {
                 counterIsActive = true;
+                Notification.initNotification(this);
+
                 controllerButton.setText(getString(R.string.stop));
                 timeInMillis = (0.451 * Math.pow(weight, 2.0f / 3.0f) * Math.log(0.76 * (tBoil - tFridge) / (tBoil - tTarget))) * 60 * 1000;
                 setAlarm((long) timeInMillis);
@@ -298,7 +300,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     @Override
                     public void onFinish() {
-                        Notification.showNotification(context, "00:00");
                         counterIsActive = false;
                         countUpTimerIsActive = true;
                         AlarmReceiver.playAlarmSound(context);

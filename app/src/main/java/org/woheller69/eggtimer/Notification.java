@@ -1,46 +1,35 @@
 package org.woheller69.eggtimer;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import androidx.core.app.NotificationCompat;
-
 public class Notification {
 
     static void initNotification(Context context) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "EggTimer";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID)==null) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "EggTimer", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(notificationChannel);
+        Intent intent = new Intent(context, NotificationService.class);
+        if (SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
         }
     }
 
     static void cancelNotification(Context context) {
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(1);
+        context.startService(new Intent(context, NotificationService.class).setAction("EggTimer.STOP_SERVICE"));
+
     }
 
     static void showNotification(Context context, String timeRemaining) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent pIntent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            pIntent = PendingIntent.getActivity(context,0, intent, PendingIntent.FLAG_IMMUTABLE);
+        Intent intent = new Intent(context, NotificationService.class);
+        intent.putExtra("Remaining", timeRemaining);
+        if (SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent);
         } else {
-            pIntent = PendingIntent.getActivity(context,0, intent, 0);
+            context.startService(intent);
         }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"EggTimer")
-                .setSmallIcon(R.drawable.ic_egg)
-                .setContentTitle(context.getString(R.string.cookingtime)).setContentText(timeRemaining).setSilent(true).setContentIntent(pIntent);
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1,builder.build());
     }
 
 }
