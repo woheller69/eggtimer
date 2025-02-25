@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:textSize="35sp"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/black"
         android:text="@string/instructions" />
 
     <TextView
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/Instruction1"
         android:padding="15dp"
         android:textSize="20sp"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/black"
         android:text="@string/instruction_text" />
 
     <ImageButton
