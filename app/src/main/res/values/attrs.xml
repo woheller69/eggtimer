@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="Theme">
+        <attr name="colorError" format="reference|color" />
+        <attr name="colorPrimary" format="reference|color"/>
+        <attr name="colorOnPrimaryContainer" format="reference|color"/>
+    </declare-styleable>
+</resources>

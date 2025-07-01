@@ -21,6 +21,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.preference.PreferenceManager;
 
@@ -31,6 +34,7 @@ import android.view.View;
 
 import android.os.CountDownTimer;
 
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -83,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initViews() {
         String[] consistency = new String[coreTemperature.length];
-        setContentView(R.layout.activity_main);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         altitudeTextView = findViewById(R.id.altitude);
         controllerButton = (Button) findViewById(R.id.controllerButton);
@@ -178,14 +181,55 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         SplashScreen.installSplashScreen(this);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if (sp.getBoolean("useDynamicColors", false)) {
             DynamicColors.applyToActivityIfAvailable(this);
             DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         }
-        getWindow().setStatusBarColor(getThemeColor(this,R.attr.colorPrimaryDark));
-        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        boolean isDarkMode = (nightModeFlags == Configuration.UI_MODE_NIGHT_YES);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            WindowInsetsController insetsController = getWindow().getInsetsController();
+            if (insetsController != null) {
+                if (isDarkMode) {
+                    // Dark mode: remove light status bar appearance (use light icons)
+                    insetsController.setSystemBarsAppearance(
+                            0,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    );
+                } else {
+                    // Light mode: enable light status bar appearance (dark icons)
+                    insetsController.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    );
+                }
+            }
+        } else {
+            getWindow().setStatusBarColor(getThemeColor(this,R.attr.colorPrimary));
+        }
+
+/*
+        //Alternative to     android:fitsSystemWindows="true" in activity_main.xml
+        // This only needs to be done ONCE
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_main), (view, insets) -> {
+            Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            view.setPadding(
+                    systemBarsInsets.left,
+                    systemBarsInsets.top,
+                    systemBarsInsets.right,
+                    systemBarsInsets.bottom
+            );
+            return insets;
+        });
+*/
         checkAndRequestPerms();
     }
 
