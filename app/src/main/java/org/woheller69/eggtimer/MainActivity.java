@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
         } else {
-            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0);
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_MUTABLE);
         }
 
         //SCHEDULE_EXACT_ALARM: on Android 12 this permission should usually be automatically granted by the Android system
