@@ -44,6 +44,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.color.DynamicColors;
+import org.woheller69.freeDroidWarn.FreeDroidWarn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -230,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return insets;
         });
 */
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE);
         checkAndRequestPerms();
     }
 
